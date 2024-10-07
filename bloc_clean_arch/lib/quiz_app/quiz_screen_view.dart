@@ -1,0 +1,201 @@
+import 'package:bloc_clean_arch/quiz_app/question_holder_class_similar_to_my_kotlin_quiz_app.dart';
+import 'package:bloc_clean_arch/quiz_app/quiz_bloc/quiz_bloc.dart';
+import 'package:bloc_clean_arch/quiz_app/quiz_bloc/quiz_events.dart';
+import 'package:bloc_clean_arch/quiz_app/quiz_bloc/quiz_states.dart';
+import 'package:bloc_clean_arch/quiz_app/quiz_model.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
+class MyQuizScreen extends StatefulWidget {
+  const MyQuizScreen({super.key});
+
+  @override
+  State<MyQuizScreen> createState() => _MyQuizScreenState();
+}
+
+class _MyQuizScreenState extends State<MyQuizScreen> {
+  final List<QuizModel> questions =
+      Question().GetQuestions(subjChoosen: 'physics');
+  //List<QuizModel> questions =
+  int currentQuestion = 0;
+  void next() {
+    setState(() {
+      print('curr: ${currentQuestion}');
+      print('que size: ${questions.length}');
+
+      if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        print('curr: ${currentQuestion}');
+        print('que size: ${questions.length}');
+      }
+    });
+  }
+
+  void prev() {
+    setState(() {
+      print('curr: ${currentQuestion}');
+      print('que size: ${questions.length}');
+
+      if (currentQuestion < questions.length && currentQuestion != 0) {
+        currentQuestion--;
+        print('curr: ${currentQuestion}');
+        print('que size: ${questions.length}');
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => QuizBloc(),
+      child: Scaffold(
+          appBar: AppBar(
+            title: const Text('QUIZ SCREEN'),
+          ),
+          body: BlocBuilder<QuizBloc, QuizStates>(
+            // listener: (context, state) {},
+            builder: (context, state) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(questions[state.currentQ].question),
+                  TextButton(
+                    onPressed: () {
+                      if (questions[state.currentQ].optionA['a'] ==
+                          questions[state.currentQ].correctAns['correctAns']) {
+                        Fluttertoast.showToast(
+                            msg: 'correct',
+                            //  toastLength: Toast.LENGTH_LONG,
+                            // gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.green,
+                            textColor: Colors.white,
+                            fontSize: 16.0);
+                        print('Correct');
+                      } else {
+                        Fluttertoast.showToast(
+                            msg: 'wrong',
+                            //  toastLength: Toast.LENGTH_LONG,
+                            // gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                            fontSize: 16.0);
+                        print('Wrong');
+                      }
+                    },
+                    child: Text(questions[state.currentQ].optionA['a']!),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      if (questions[state.currentQ].optionB['b'] ==
+                          questions[state.currentQ].correctAns['correctAns']) {
+                        Fluttertoast.showToast(
+                            msg: 'correct',
+                            //  toastLength: Toast.LENGTH_LONG,
+                            // gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.green,
+                            textColor: Colors.white,
+                            fontSize: 16.0);
+                        print('Correct');
+                      } else {
+                        Fluttertoast.showToast(
+                            msg: 'wrong',
+                            //  toastLength: Toast.LENGTH_LONG,
+                            // gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                            fontSize: 16.0);
+                        print('Wrong');
+                      }
+                    },
+                    child: Text(questions[state.currentQ].optionB['b']!),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      if (questions[state.currentQ].optionC['c'] ==
+                          questions[state.currentQ].correctAns['correctAns']) {
+                        Fluttertoast.showToast(
+                            msg: 'correct',
+                            //  toastLength: Toast.LENGTH_LONG,
+                            // gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.green,
+                            textColor: Colors.white,
+                            fontSize: 16.0);
+                        print('Correct');
+                      } else {
+                        Fluttertoast.showToast(
+                            msg: 'wrong',
+                            //  toastLength: Toast.LENGTH_LONG,
+                            // gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                            fontSize: 16.0);
+                        print('Wrong');
+                      }
+                    },
+                    child: Text(questions[state.currentQ].optionC['c']!),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      if (questions[state.currentQ].optionD['d'] ==
+                          questions[state.currentQ].correctAns['correctAns']) {
+                        Fluttertoast.showToast(
+                            msg: 'correct',
+                            //  toastLength: Toast.LENGTH_LONG,
+                            // gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.green,
+                            textColor: Colors.white,
+                            fontSize: 16.0);
+                        print('Correct');
+                      } else {
+                        Fluttertoast.showToast(
+                            msg: 'wrong',
+                            //  toastLength: Toast.LENGTH_LONG,
+                            // gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                            fontSize: 16.0);
+                        print('Wrong');
+                      }
+                    },
+                    child: Text(questions[state.currentQ].optionD['d']!),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          // prev();
+                          context
+                              .read<QuizBloc>()
+                              .add(PreviousQuestion(questions.length));
+                        },
+                        child: const Text('Prev'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          next();
+                          context
+                              .read<QuizBloc>()
+                              .add(NextQuestion(questions.length));
+                        },
+                        child: const Text('Next'),
+                      )
+                    ],
+                  )
+                ],
+              );
+            },
+          )),
+    );
+  }
+}
