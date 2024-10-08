@@ -11,3 +11,7 @@ class PreviousQuestion extends QuizEvents {
   final int currentQI;
   PreviousQuestion(this.currentQI);
 }
+
+class LoadQuestion extends QuizEvents {
+  const LoadQuestion();
+}

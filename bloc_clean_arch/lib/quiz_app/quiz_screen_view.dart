@@ -16,35 +16,33 @@ class MyQuizScreen extends StatefulWidget {
 }
 
 class _MyQuizScreenState extends State<MyQuizScreen> {
-  final List<QuizModel> questions =
-      Question().GetQuestions(subjChoosen: 'physics');
   //List<QuizModel> questions =
   int currentQuestion = 0;
-  void next() {
-    setState(() {
-      print('curr: ${currentQuestion}');
-      print('que size: ${questions.length}');
+  // void next() {
+  //   setState(() {
+  //     print('curr: ${currentQuestion}');
+  //     print('que size: ${questions.length}');
 
-      if (currentQuestion < questions.length - 1) {
-        currentQuestion++;
-        print('curr: ${currentQuestion}');
-        print('que size: ${questions.length}');
-      }
-    });
-  }
+  //     if (currentQuestion < questions.length - 1) {
+  //       currentQuestion++;
+  //       print('curr: ${currentQuestion}');
+  //       print('que size: ${questions.length}');
+  //     }
+  //   });
+  // }
 
-  void prev() {
-    setState(() {
-      print('curr: ${currentQuestion}');
-      print('que size: ${questions.length}');
+  // void prev() {
+  //   setState(() {
+  //     print('curr: ${currentQuestion}');
+  //     print('que size: ${questions.length}');
 
-      if (currentQuestion < questions.length && currentQuestion != 0) {
-        currentQuestion--;
-        print('curr: ${currentQuestion}');
-        print('que size: ${questions.length}');
-      }
-    });
-  }
+  //     if (currentQuestion < questions.length && currentQuestion != 0) {
+  //       currentQuestion--;
+  //       print('curr: ${currentQuestion}');
+  //       print('que size: ${questions.length}');
+  //     }
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -60,11 +58,13 @@ class _MyQuizScreenState extends State<MyQuizScreen> {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(questions[state.currentQ].question),
+                  Text(state.q[state.currentQ].question
+                      //questions[state.currentQ].question
+                      ),
                   TextButton(
                     onPressed: () {
-                      if (questions[state.currentQ].optionA['a'] ==
-                          questions[state.currentQ].correctAns['correctAns']) {
+                      if (state.q[state.currentQ].optionA['a'] ==
+                          state.q[state.currentQ].correctAns['correctAns']) {
                         Fluttertoast.showToast(
                             msg: 'correct',
                             //  toastLength: Toast.LENGTH_LONG,
@@ -86,12 +86,12 @@ class _MyQuizScreenState extends State<MyQuizScreen> {
                         print('Wrong');
                       }
                     },
-                    child: Text(questions[state.currentQ].optionA['a']!),
+                    child: Text(state.q[state.currentQ].optionA['a']!),
                   ),
                   TextButton(
                     onPressed: () {
-                      if (questions[state.currentQ].optionB['b'] ==
-                          questions[state.currentQ].correctAns['correctAns']) {
+                      if (state.q[state.currentQ].optionB['b'] ==
+                          state.q[state.currentQ].correctAns['correctAns']) {
                         Fluttertoast.showToast(
                             msg: 'correct',
                             //  toastLength: Toast.LENGTH_LONG,
@@ -113,12 +113,12 @@ class _MyQuizScreenState extends State<MyQuizScreen> {
                         print('Wrong');
                       }
                     },
-                    child: Text(questions[state.currentQ].optionB['b']!),
+                    child: Text(state.q[state.currentQ].optionB['b']!),
                   ),
                   TextButton(
                     onPressed: () {
-                      if (questions[state.currentQ].optionC['c'] ==
-                          questions[state.currentQ].correctAns['correctAns']) {
+                      if (state.q[state.currentQ].optionC['c'] ==
+                          state.q[state.currentQ].correctAns['correctAns']) {
                         Fluttertoast.showToast(
                             msg: 'correct',
                             //  toastLength: Toast.LENGTH_LONG,
@@ -140,12 +140,12 @@ class _MyQuizScreenState extends State<MyQuizScreen> {
                         print('Wrong');
                       }
                     },
-                    child: Text(questions[state.currentQ].optionC['c']!),
+                    child: Text(state.q[state.currentQ].optionC['c']!),
                   ),
                   TextButton(
                     onPressed: () {
-                      if (questions[state.currentQ].optionD['d'] ==
-                          questions[state.currentQ].correctAns['correctAns']) {
+                      if (state.q[state.currentQ].optionD['d'] ==
+                          state.q[state.currentQ].correctAns['correctAns']) {
                         Fluttertoast.showToast(
                             msg: 'correct',
                             //  toastLength: Toast.LENGTH_LONG,
@@ -167,7 +167,7 @@ class _MyQuizScreenState extends State<MyQuizScreen> {
                         print('Wrong');
                       }
                     },
-                    child: Text(questions[state.currentQ].optionD['d']!),
+                    child: Text(state.q[state.currentQ].optionD['d']!),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -177,16 +177,16 @@ class _MyQuizScreenState extends State<MyQuizScreen> {
                           // prev();
                           context
                               .read<QuizBloc>()
-                              .add(PreviousQuestion(questions.length));
+                              .add(PreviousQuestion(state.q.length));
                         },
                         child: const Text('Prev'),
                       ),
                       TextButton(
                         onPressed: () {
-                          next();
+                          // next();
                           context
                               .read<QuizBloc>()
-                              .add(NextQuestion(questions.length));
+                              .add(NextQuestion(state.q.length));
                         },
                         child: const Text('Next'),
                       )
