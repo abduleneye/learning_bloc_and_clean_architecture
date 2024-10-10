@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'quiz_model.dart';
+import '../../quiz_model.dart';
 
 void QuizStart({required String subject}) {
   // List<QuizModel> physicsQuestions = [];
