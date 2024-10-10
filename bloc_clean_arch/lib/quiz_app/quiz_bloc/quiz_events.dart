@@ -3,15 +3,19 @@ class QuizEvents {
 }
 
 class NextQuestion extends QuizEvents {
-  final int currentQI;
-  NextQuestion(this.currentQI);
+  NextQuestion();
 }
 
 class PreviousQuestion extends QuizEvents {
-  final int currentQI;
-  PreviousQuestion(this.currentQI);
+  PreviousQuestion();
 }
 
 class LoadQuestion extends QuizEvents {
-  const LoadQuestion();
+  final String questionCategogry;
+  const LoadQuestion({required this.questionCategogry});
+}
+
+class AnswerCheck extends QuizEvents {
+  final String? selectedAnswer;
+  const AnswerCheck({required this.selectedAnswer});
 }

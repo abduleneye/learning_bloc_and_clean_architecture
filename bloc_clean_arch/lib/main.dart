@@ -1,9 +1,11 @@
 import 'package:bloc_clean_arch/counter_app/counter_cubit_bloc/counter_page.dart';
+import 'package:bloc_clean_arch/quiz_app/quiz_bloc/quiz_bloc.dart';
 import 'package:bloc_clean_arch/quiz_app/quiz_screen_view.dart';
 import 'package:bloc_clean_arch/simple_calculator_app_cubit_bloc/presentation/calc_view.dart';
 import 'package:bloc_clean_arch/todo_app_cubit_bloc/data/local/model/isar_todo.dart';
 import 'package:bloc_clean_arch/todo_app_cubit_bloc/data/repository/isar_todo_repo.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
@@ -42,9 +44,12 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: true,
-      home: MyQuizScreen(),
+      home: BlocProvider<QuizBloc>(
+        create: (context) => QuizBloc(),
+        child: const MyQuizScreen(),
+      ),
     );
   }
 }

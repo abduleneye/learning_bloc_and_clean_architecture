@@ -55,6 +55,9 @@ class _MyQuizScreenState extends State<MyQuizScreen> {
           body: BlocBuilder<QuizBloc, QuizStates>(
             // listener: (context, state) {},
             builder: (context, state) {
+              context
+                  .read<QuizBloc>()
+                  .add(const LoadQuestion(questionCategogry: 'physics'));
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -63,109 +66,33 @@ class _MyQuizScreenState extends State<MyQuizScreen> {
                       ),
                   TextButton(
                     onPressed: () {
-                      if (state.q[state.currentQ].optionA['a'] ==
-                          state.q[state.currentQ].correctAns['correctAns']) {
-                        Fluttertoast.showToast(
-                            msg: 'correct',
-                            //  toastLength: Toast.LENGTH_LONG,
-                            // gravity: ToastGravity.CENTER,
-                            timeInSecForIosWeb: 1,
-                            backgroundColor: Colors.green,
-                            textColor: Colors.white,
-                            fontSize: 16.0);
-                        print('Correct');
-                      } else {
-                        Fluttertoast.showToast(
-                            msg: 'wrong',
-                            //  toastLength: Toast.LENGTH_LONG,
-                            // gravity: ToastGravity.CENTER,
-                            timeInSecForIosWeb: 1,
-                            backgroundColor: Colors.red,
-                            textColor: Colors.white,
-                            fontSize: 16.0);
-                        print('Wrong');
-                      }
+                      context.read<QuizBloc>().add(AnswerCheck(
+                          selectedAnswer:
+                              state.q[state.currentQ].optionA['a']));
                     },
                     child: Text(state.q[state.currentQ].optionA['a']!),
                   ),
                   TextButton(
                     onPressed: () {
-                      if (state.q[state.currentQ].optionB['b'] ==
-                          state.q[state.currentQ].correctAns['correctAns']) {
-                        Fluttertoast.showToast(
-                            msg: 'correct',
-                            //  toastLength: Toast.LENGTH_LONG,
-                            // gravity: ToastGravity.CENTER,
-                            timeInSecForIosWeb: 1,
-                            backgroundColor: Colors.green,
-                            textColor: Colors.white,
-                            fontSize: 16.0);
-                        print('Correct');
-                      } else {
-                        Fluttertoast.showToast(
-                            msg: 'wrong',
-                            //  toastLength: Toast.LENGTH_LONG,
-                            // gravity: ToastGravity.CENTER,
-                            timeInSecForIosWeb: 1,
-                            backgroundColor: Colors.red,
-                            textColor: Colors.white,
-                            fontSize: 16.0);
-                        print('Wrong');
-                      }
+                      context.read<QuizBloc>().add(AnswerCheck(
+                          selectedAnswer:
+                              state.q[state.currentQ].optionB['b']));
                     },
                     child: Text(state.q[state.currentQ].optionB['b']!),
                   ),
                   TextButton(
                     onPressed: () {
-                      if (state.q[state.currentQ].optionC['c'] ==
-                          state.q[state.currentQ].correctAns['correctAns']) {
-                        Fluttertoast.showToast(
-                            msg: 'correct',
-                            //  toastLength: Toast.LENGTH_LONG,
-                            // gravity: ToastGravity.CENTER,
-                            timeInSecForIosWeb: 1,
-                            backgroundColor: Colors.green,
-                            textColor: Colors.white,
-                            fontSize: 16.0);
-                        print('Correct');
-                      } else {
-                        Fluttertoast.showToast(
-                            msg: 'wrong',
-                            //  toastLength: Toast.LENGTH_LONG,
-                            // gravity: ToastGravity.CENTER,
-                            timeInSecForIosWeb: 1,
-                            backgroundColor: Colors.red,
-                            textColor: Colors.white,
-                            fontSize: 16.0);
-                        print('Wrong');
-                      }
+                      context.read<QuizBloc>().add(AnswerCheck(
+                          selectedAnswer:
+                              state.q[state.currentQ].optionC['c']));
                     },
                     child: Text(state.q[state.currentQ].optionC['c']!),
                   ),
                   TextButton(
                     onPressed: () {
-                      if (state.q[state.currentQ].optionD['d'] ==
-                          state.q[state.currentQ].correctAns['correctAns']) {
-                        Fluttertoast.showToast(
-                            msg: 'correct',
-                            //  toastLength: Toast.LENGTH_LONG,
-                            // gravity: ToastGravity.CENTER,
-                            timeInSecForIosWeb: 1,
-                            backgroundColor: Colors.green,
-                            textColor: Colors.white,
-                            fontSize: 16.0);
-                        print('Correct');
-                      } else {
-                        Fluttertoast.showToast(
-                            msg: 'wrong',
-                            //  toastLength: Toast.LENGTH_LONG,
-                            // gravity: ToastGravity.CENTER,
-                            timeInSecForIosWeb: 1,
-                            backgroundColor: Colors.red,
-                            textColor: Colors.white,
-                            fontSize: 16.0);
-                        print('Wrong');
-                      }
+                      context.read<QuizBloc>().add(AnswerCheck(
+                          selectedAnswer:
+                              state.q[state.currentQ].optionD['d']));
                     },
                     child: Text(state.q[state.currentQ].optionD['d']!),
                   ),
@@ -175,18 +102,14 @@ class _MyQuizScreenState extends State<MyQuizScreen> {
                       TextButton(
                         onPressed: () {
                           // prev();
-                          context
-                              .read<QuizBloc>()
-                              .add(PreviousQuestion(state.q.length));
+                          context.read<QuizBloc>().add(PreviousQuestion());
                         },
                         child: const Text('Prev'),
                       ),
                       TextButton(
                         onPressed: () {
                           // next();
-                          context
-                              .read<QuizBloc>()
-                              .add(NextQuestion(state.q.length));
+                          context.read<QuizBloc>().add(NextQuestion());
                         },
                         child: const Text('Next'),
                       )

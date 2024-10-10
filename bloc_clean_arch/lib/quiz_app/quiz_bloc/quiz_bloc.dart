@@ -8,19 +8,19 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class QuizBloc extends Bloc<QuizEvents, QuizStates> {
   QuizBloc() : super(const QuizStates(currentQ: 0, q: [])) {
-    final List<QuizModel> chemistryQuestions =
-        Question().GetQuestions(subjChoosen: 'chemistry');
     final List<QuizModel> physicsQuestions =
-        Question().GetQuestions(subjChoosen: 'physics');
-    emit(QuizStates(currentQ: state.currentQ, q: chemistryQuestions));
+        Question().GetQuestions(subjChoosen: 'chemistry');
+    emit(QuizStates(currentQ: state.currentQ, q: physicsQuestions));
 
     on<LoadQuestion>((event, emit) {
+      final List<QuizModel> physicsQuestions =
+          Question().GetQuestions(subjChoosen: event.questionCategogry);
       emit(QuizStates(currentQ: state.currentQ, q: physicsQuestions));
       //print(chemistryQuestions);
     });
 
     on<NextQuestion>((event, emit) {
-      if (state.currentQ < event.currentQI - 1) {
+      if (state.currentQ < state.q.length - 1) {
         emit(QuizStates(currentQ: state.currentQ + 1, q: state.q));
       } else {
         Fluttertoast.showToast(
@@ -35,7 +35,7 @@ class QuizBloc extends Bloc<QuizEvents, QuizStates> {
     });
 
     on<PreviousQuestion>((event, emit) {
-      if (state.currentQ < event.currentQI && state.currentQ != 0) {
+      if (state.currentQ < state.q.length && state.currentQ != 0) {
         emit(QuizStates(currentQ: state.currentQ - 1, q: state.q));
       } else {
         Fluttertoast.showToast(
@@ -46,6 +46,31 @@ class QuizBloc extends Bloc<QuizEvents, QuizStates> {
             backgroundColor: Colors.red,
             textColor: Colors.white,
             fontSize: 16.0);
+      }
+    });
+
+    on<AnswerCheck>((event, emit) {
+      if (event.selectedAnswer ==
+          state.q[state.currentQ].correctAns['correctAns']) {
+        Fluttertoast.showToast(
+            msg: 'correct',
+            //  toastLength: Toast.LENGTH_LONG,
+            // gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.green,
+            textColor: Colors.white,
+            fontSize: 16.0);
+        print('Correct');
+      } else {
+        Fluttertoast.showToast(
+            msg: 'wrong',
+            //  toastLength: Toast.LENGTH_LONG,
+            // gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
+        print('Wrong');
       }
     });
   }
