@@ -55,9 +55,9 @@ class _MyQuizScreenState extends State<MyQuizScreen> {
           body: BlocBuilder<QuizBloc, QuizStates>(
             // listener: (context, state) {},
             builder: (context, state) {
-              context
-                  .read<QuizBloc>()
-                  .add(const LoadQuestion(questionCategogry: 'physics'));
+              // context
+              //     .read<QuizBloc>()
+              //     .add(const LoadQuestion(questionCategogry: 'physics'));
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

@@ -8,14 +8,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class QuizBloc extends Bloc<QuizEvents, QuizStates> {
   QuizBloc() : super(const QuizStates(currentQ: 0, q: [])) {
-    final List<QuizModel> physicsQuestions =
+    final List<QuizModel> questions =
         Question().GetQuestions(subjChoosen: 'chemistry');
-    emit(QuizStates(currentQ: state.currentQ, q: physicsQuestions));
+    emit(QuizStates(currentQ: state.currentQ, q: questions));
 
     on<LoadQuestion>((event, emit) {
-      final List<QuizModel> physicsQuestions =
-          Question().GetQuestions(subjChoosen: event.questionCategogry);
-      emit(QuizStates(currentQ: state.currentQ, q: physicsQuestions));
+      emit(QuizStates(currentQ: state.currentQ, q: questions));
       //print(chemistryQuestions);
     });
 
