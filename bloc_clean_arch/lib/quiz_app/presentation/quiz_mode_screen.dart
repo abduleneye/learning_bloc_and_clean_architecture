@@ -19,27 +19,29 @@ class _QuizModeHomeScreenState extends State<QuizModeHomeScreen> {
         title: const Text('QuizHomeScreen'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                MyButton(
-                  onTap: () {
-                    context.read<QuizBloc>().add(const NavigationEvent(
-                        screenRoute: 'offline_mode_screen',
-                        questionCategory: null));
-                  },
-                  id: 'Offline',
-                ),
-                MyButton(
-                  onTap: () {},
-                  id: 'Online',
-                )
-              ],
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  MyButton(
+                    onTap: () {
+                      context.read<QuizBloc>().add(const NavigationEvent(
+                          screenRoute: 'offline_mode_screen',
+                          questionCategory: null));
+                    },
+                    id: 'Offline',
+                  ),
+                  MyButton(
+                    onTap: () {},
+                    id: 'Online',
+                  )
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

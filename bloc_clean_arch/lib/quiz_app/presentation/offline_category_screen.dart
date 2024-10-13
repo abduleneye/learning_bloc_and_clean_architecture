@@ -17,46 +17,50 @@ class _OfflineCategoryScreenState extends State<OfflineCategoryScreen> {
     return WillPopScope(
       child: Scaffold(
         appBar: AppBar(title: const Text('Offline Category')),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
+        body: Center(
+          child: SingleChildScrollView(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                MyButton(
-                  onTap: () {},
-                  id: 'Maths',
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    MyButton(
+                      onTap: () {},
+                      id: 'Maths',
+                    ),
+                    MyButton(
+                      onTap: () {},
+                      id: 'English',
+                    )
+                  ],
                 ),
-                MyButton(
-                  onTap: () {},
-                  id: 'English',
+                const SizedBox(
+                  height: 25,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    MyButton(
+                        onTap: () {
+                          context.read<QuizBloc>().add(const NavigationEvent(
+                              screenRoute: 'quiz_screen',
+                              questionCategory: 'physics'));
+                        },
+                        id: 'Physics'),
+                    MyButton(
+                      onTap: () {
+                        context.read<QuizBloc>().add(const NavigationEvent(
+                            screenRoute: 'quiz_screen',
+                            questionCategory: 'chemistry'));
+                      },
+                      id: 'Chemistry',
+                    )
+                  ],
                 )
               ],
             ),
-            const SizedBox(
-              height: 25,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                MyButton(
-                    onTap: () {
-                      context.read<QuizBloc>().add(const NavigationEvent(
-                          screenRoute: 'quiz_screen',
-                          questionCategory: 'physics'));
-                    },
-                    id: 'Physics'),
-                MyButton(
-                  onTap: () {
-                    context.read<QuizBloc>().add(const NavigationEvent(
-                        screenRoute: 'quiz_screen',
-                        questionCategory: 'chemistry'));
-                  },
-                  id: 'Chemistry',
-                )
-              ],
-            )
-          ],
+          ),
         ),
       ),
       onWillPop: () async {

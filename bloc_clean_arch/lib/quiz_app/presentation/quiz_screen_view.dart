@@ -1,6 +1,7 @@
 import 'package:bloc_clean_arch/quiz_app/domain/quiz_bloc/quiz_bloc.dart';
 import 'package:bloc_clean_arch/quiz_app/domain/quiz_bloc/quiz_events.dart';
 import 'package:bloc_clean_arch/quiz_app/domain/quiz_bloc/quiz_states.dart';
+import 'package:bloc_clean_arch/quiz_app/presentation/ui_components/quiz_screen_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -58,68 +59,105 @@ class _MyQuizScreenState extends State<MyQuizScreen> {
                 appBar: AppBar(
                   title: const Text('QUIZ SCREEN'),
                 ),
-                body: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(state.questions[state.currentQ].question
-                        //questions[state.currentQ].question
-                        ),
-                    TextButton(
-                      onPressed: () {
-                        context.read<QuizBloc>().add(AnswerCheck(
-                            selectedAnswer:
-                                state.questions[state.currentQ].optionA['a']));
-                      },
-                      child:
-                          Text(state.questions[state.currentQ].optionA['a']!),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        context.read<QuizBloc>().add(AnswerCheck(
-                            selectedAnswer:
-                                state.questions[state.currentQ].optionB['b']));
-                      },
-                      child:
-                          Text(state.questions[state.currentQ].optionB['b']!),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        context.read<QuizBloc>().add(AnswerCheck(
-                            selectedAnswer:
-                                state.questions[state.currentQ].optionC['c']));
-                      },
-                      child:
-                          Text(state.questions[state.currentQ].optionC['c']!),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        context.read<QuizBloc>().add(AnswerCheck(
-                            selectedAnswer:
-                                state.questions[state.currentQ].optionD['d']));
-                      },
-                      child:
-                          Text(state.questions[state.currentQ].optionD['d']!),
-                    ),
-                    Row(
+                body: Center(
+                  child: SingleChildScrollView(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        TextButton(
-                          onPressed: () {
-                            // prev();
-                            context.read<QuizBloc>().add(PreviousQuestion());
-                          },
-                          child: const Text('Prev'),
+                        QuizCard(
+                            isQuestion: true,
+                            containerHeight: 100,
+                            containerWidth: 300,
+                            containerInnerPadding: 25,
+                            questionOrOption:
+                                state.questions[state.currentQ].question),
+                        const SizedBox(
+                          height: 10,
                         ),
-                        TextButton(
-                          onPressed: () {
-                            // next();
-                            context.read<QuizBloc>().add(NextQuestion());
+                        QuizCard(
+                            isQuestion: false,
+                            onTap: () {
+                              context.read<QuizBloc>().add(AnswerCheck(
+                                  selectedAnswer: state
+                                      .questions[state.currentQ].optionA['a']));
+                            },
+                            questionOrOption:
+                                state.questions[state.currentQ].optionA['a']!,
+                            containerHeight: 50,
+                            containerWidth: 250,
+                            containerInnerPadding: 10),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        QuizCard(
+                          isQuestion: false,
+                          onTap: () {
+                            context.read<QuizBloc>().add(AnswerCheck(
+                                selectedAnswer: state
+                                    .questions[state.currentQ].optionB['b']));
                           },
-                          child: const Text('Next'),
+                          questionOrOption:
+                              state.questions[state.currentQ].optionB['b']!,
+                          containerHeight: 50,
+                          containerWidth: 250,
+                          containerInnerPadding: 10,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        QuizCard(
+                          isQuestion: false,
+                          onTap: () {
+                            context.read<QuizBloc>().add(AnswerCheck(
+                                selectedAnswer: state
+                                    .questions[state.currentQ].optionC['c']));
+                          },
+                          questionOrOption:
+                              state.questions[state.currentQ].optionC['c']!,
+                          containerHeight: 50,
+                          containerWidth: 250,
+                          containerInnerPadding: 10,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        QuizCard(
+                          isQuestion: false,
+                          onTap: () {
+                            context.read<QuizBloc>().add(AnswerCheck(
+                                selectedAnswer: state
+                                    .questions[state.currentQ].optionD['d']));
+                          },
+                          questionOrOption:
+                              state.questions[state.currentQ].optionD['d']!,
+                          containerHeight: 50,
+                          containerWidth: 250,
+                          containerInnerPadding: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                                // prev();
+                                context
+                                    .read<QuizBloc>()
+                                    .add(PreviousQuestion());
+                              },
+                              child: const Text('Prev'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                // next();
+                                context.read<QuizBloc>().add(NextQuestion());
+                              },
+                              child: const Text('Next'),
+                            )
+                          ],
                         )
                       ],
-                    )
-                  ],
+                    ),
+                  ),
                 )),
             onWillPop: () async {
               context.read<QuizBloc>().add(const NavigationEvent(

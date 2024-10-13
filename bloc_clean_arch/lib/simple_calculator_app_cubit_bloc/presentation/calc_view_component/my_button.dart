@@ -10,8 +10,8 @@ class MyButton extends StatelessWidget {
     return InkResponse(
         onTap: onTap,
         child: Container(
-            width: 132,
-            height: 132,
+            width: 110,
+            height: 110,
             padding: const EdgeInsets.all(25),
             margin: const EdgeInsets.symmetric(horizontal: 25),
             decoration: BoxDecoration(
