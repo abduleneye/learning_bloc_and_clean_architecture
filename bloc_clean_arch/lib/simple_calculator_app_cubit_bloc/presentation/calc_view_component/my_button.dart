@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:isar/isar.dart';
 
 class MyButton extends StatelessWidget {
   final Function()? onTap;
@@ -8,7 +7,7 @@ class MyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkResponse(
         onTap: onTap,
         child: Container(
             width: 132,
