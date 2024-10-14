@@ -2,20 +2,19 @@ import 'package:flutter/material.dart';
 
 class QuizCard extends StatelessWidget {
   final Function()? onTap;
-  final bool isQuestion;
+  final String containerColorState;
   final double? containerHeight;
   final double? containerWidth;
   final double containerInnerPadding;
   final String questionOrOption;
-  const QuizCard({
-    super.key,
-    required this.questionOrOption,
-    this.onTap,
-    required this.containerHeight,
-    required this.containerWidth,
-    required this.containerInnerPadding,
-    required this.isQuestion,
-  });
+  const QuizCard(
+      {super.key,
+      required this.questionOrOption,
+      this.onTap,
+      required this.containerHeight,
+      required this.containerWidth,
+      required this.containerInnerPadding,
+      required this.containerColorState});
 
   @override
   Widget build(BuildContext context) {
@@ -26,12 +25,27 @@ class QuizCard extends StatelessWidget {
         height: containerHeight,
         width: containerWidth,
         child: Center(
-            child: Text(
-          questionOrOption,
-          style: const TextStyle(),
+            child: Row(
+          children: [
+            Text(
+              questionOrOption,
+              style: const TextStyle(),
+            ),
+          ],
         )),
         decoration: BoxDecoration(
-            color: Colors.blue, borderRadius: BorderRadius.circular(8)),
+          color: () {
+            switch (containerColorState) {
+              case 'iscorrect':
+                return Colors.green;
+              case 'iswrong':
+                return Colors.red;
+              default:
+                return Colors.grey;
+            }
+          }(),
+          borderRadius: BorderRadius.circular(8),
+        ),
       ),
     );
   }

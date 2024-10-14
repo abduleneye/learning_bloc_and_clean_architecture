@@ -65,7 +65,7 @@ class _MyQuizScreenState extends State<MyQuizScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         QuizCard(
-                            isQuestion: true,
+                            containerColorState: '',
                             containerHeight: 100,
                             containerWidth: 300,
                             containerInnerPadding: 25,
@@ -75,7 +75,7 @@ class _MyQuizScreenState extends State<MyQuizScreen> {
                           height: 10,
                         ),
                         QuizCard(
-                            isQuestion: false,
+                            containerColorState: state.isOptionA,
                             onTap: () {
                               context.read<QuizBloc>().add(AnswerCheck(
                                   selectedAnswer: state
@@ -90,7 +90,7 @@ class _MyQuizScreenState extends State<MyQuizScreen> {
                           height: 10,
                         ),
                         QuizCard(
-                          isQuestion: false,
+                          containerColorState: state.isOptionB,
                           onTap: () {
                             context.read<QuizBloc>().add(AnswerCheck(
                                 selectedAnswer: state
@@ -106,7 +106,7 @@ class _MyQuizScreenState extends State<MyQuizScreen> {
                           height: 10,
                         ),
                         QuizCard(
-                          isQuestion: false,
+                          containerColorState: state.isOptionC,
                           onTap: () {
                             context.read<QuizBloc>().add(AnswerCheck(
                                 selectedAnswer: state
@@ -122,7 +122,7 @@ class _MyQuizScreenState extends State<MyQuizScreen> {
                           height: 10,
                         ),
                         QuizCard(
-                          isQuestion: false,
+                          containerColorState: state.isOptionD,
                           onTap: () {
                             context.read<QuizBloc>().add(AnswerCheck(
                                 selectedAnswer: state
