@@ -21,18 +21,21 @@ class QuizCard extends StatelessWidget {
     return InkResponse(
       onTap: onTap,
       child: Container(
+        alignment: Alignment.centerLeft,
         padding: EdgeInsets.all(containerInnerPadding),
         height: containerHeight,
         width: containerWidth,
-        child: Center(
-            child: Row(
-          children: [
-            Text(
+        child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+          Expanded(
+            child: Text(
+              softWrap: true,
               questionOrOption,
-              style: const TextStyle(),
+              style: const TextStyle(
+                  // overflow: TextOverflow.ellipsis,
+                  ),
             ),
-          ],
-        )),
+          ),
+        ]),
         decoration: BoxDecoration(
           color: () {
             switch (containerColorState) {

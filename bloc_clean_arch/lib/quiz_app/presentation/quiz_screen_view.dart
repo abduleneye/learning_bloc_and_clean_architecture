@@ -67,7 +67,7 @@ class _MyQuizScreenState extends State<MyQuizScreen> {
                         QuizCard(
                             containerColorState: '',
                             containerHeight: 100,
-                            containerWidth: 300,
+                            containerWidth: 350,
                             containerInnerPadding: 25,
                             questionOrOption:
                                 state.questions[state.currentQ].question),
@@ -154,6 +154,13 @@ class _MyQuizScreenState extends State<MyQuizScreen> {
                               child: const Text('Next'),
                             )
                           ],
+                        ),
+                        Visibility(
+                          visible: state.correctAnswerVisibility,
+                          child: Text(
+                            'The correct answer is: ${state.correctAnswer.toString()}',
+                            style: const TextStyle(color: Colors.green),
+                          ),
                         )
                       ],
                     ),
