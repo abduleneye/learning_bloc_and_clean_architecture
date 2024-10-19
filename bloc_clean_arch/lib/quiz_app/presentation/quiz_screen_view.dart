@@ -67,7 +67,8 @@ class _MyQuizScreenState extends State<MyQuizScreen> {
                         QuizCard(
                             containerColorState: '',
                             containerHeight: 100,
-                            containerWidth: 350,
+                            containerWidth:
+                                MediaQuery.of(context).size.width / 1.18,
                             containerInnerPadding: 25,
                             questionOrOption:
                                 state.questions[state.currentQ].question),

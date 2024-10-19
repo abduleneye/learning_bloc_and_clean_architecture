@@ -1,4 +1,4 @@
-package com.enye.bloc_clean_arch
+package com.eneye.learning_bloc_flutter
 
 import io.flutter.embedding.android.FlutterActivity
 

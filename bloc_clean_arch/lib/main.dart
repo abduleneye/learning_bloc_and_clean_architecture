@@ -1,10 +1,14 @@
 import 'package:bloc_clean_arch/counter_app/counter_cubit_bloc/counter_page.dart';
+import 'package:bloc_clean_arch/firebase_options.dart';
 import 'package:bloc_clean_arch/quiz_app/domain/quiz_bloc/quiz_bloc.dart';
 import 'package:bloc_clean_arch/quiz_app/presentation/home_screen.dart';
 import 'package:bloc_clean_arch/quiz_app/presentation/quiz_screen_view.dart';
 import 'package:bloc_clean_arch/simple_calculator_app_cubit_bloc/presentation/calc_view.dart';
+import 'package:bloc_clean_arch/social_app_tik_tok_like/features/auth/presentation/themes/light_mode_theme.dart';
+import 'package:bloc_clean_arch/social_app_tik_tok_like/features/auth/presentation/views/login_page.dart';
 import 'package:bloc_clean_arch/todo_app_cubit_bloc/data/local/model/isar_todo.dart';
 import 'package:bloc_clean_arch/todo_app_cubit_bloc/data/repository/isar_todo_repo.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -15,7 +19,9 @@ import 'package:toast/toast.dart';
 import 'todo_app_cubit_bloc/domain/repoistory/todo_repo.dart';
 
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
+  //Firebase setup
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   // //get directory path for storing the data
   // final dir = await getApplicationDocumentsDirectory();
 
@@ -46,11 +52,13 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: true,
-      home: BlocProvider<QuizBloc>(
-        create: (context) => QuizBloc(),
-        child: const QuizHomeScreen(),
-      ),
+      debugShowCheckedModeBanner: false,
+      theme: lightMode,
+      // home: BlocProvider<QuizBloc>(
+      //   create: (context) => QuizBloc(),
+      //   child: const QuizHomeScreen(),
+      // ),
+      home: LoginPage(),
     );
   }
 }
