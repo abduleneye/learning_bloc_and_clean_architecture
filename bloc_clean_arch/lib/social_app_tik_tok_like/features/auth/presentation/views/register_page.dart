@@ -1,32 +1,20 @@
-/*
-  LOGIN PAGE
-  On this page an existing user can login with thier: 
-  - email
-  - password
-
-  ----------------------------------------------------
-  Once the user logs in succesfully, they will be directed to the home page
-
-  If user doesn't have an account yet, they can go to the register page from here to create a new one.
-
-*/
-
-import 'package:bloc_clean_arch/simple_calculator_app_cubit_bloc/presentation/calc_view_component/my_textfield.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/auth/presentation/components/my_social_button.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/auth/presentation/components/my_text_field_social_app.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  // text Controller
+class _RegisterPageState extends State<RegisterPage> {
+  final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,9 +33,9 @@ class _LoginPageState extends State<LoginPage> {
               height: 50,
             ),
 
-            // welcome back msg
+            // create an account message
             Text(
-              "Welcome back, you've been missed!",
+              "Let's create an account for you",
               style: TextStyle(
                 color: Theme.of(context).colorScheme.primary,
                 fontSize: 16,
@@ -56,6 +44,16 @@ class _LoginPageState extends State<LoginPage> {
 
             const SizedBox(
               height: 50,
+            ),
+
+            // name textfield
+            MyTextFieldSocialApp(
+              controller: nameController,
+              hintText: 'Enter your name',
+              obscureText: false,
+            ),
+            const SizedBox(
+              height: 10,
             ),
 
             // email textfield
@@ -79,19 +77,30 @@ class _LoginPageState extends State<LoginPage> {
               height: 10,
             ),
 
-            //login button
-            MySocialButton(
-              onTap: null,
-              buttonText: 'Login',
+            // confirm pw textfield
+            MyTextFieldSocialApp(
+              controller: confirmPasswordController,
+              hintText: 'Re-enter your password',
+              obscureText: true,
             ),
 
             const SizedBox(
               height: 10,
             ),
 
-            //not a member? register
+            //register button
+            MySocialButton(
+              onTap: null,
+              buttonText: 'Register',
+            ),
+
+            const SizedBox(
+              height: 10,
+            ),
+
+            //Already have an account? Login now
             Text(
-              "Not a member? Register now",
+              "Already have an account? Login now",
               style: TextStyle(
                 color: Theme.of(context).colorScheme.primary,
               ),
@@ -100,5 +109,6 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     ));
+    ;
   }
 }

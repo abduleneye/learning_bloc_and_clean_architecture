@@ -6,6 +6,7 @@ import 'package:bloc_clean_arch/quiz_app/presentation/quiz_screen_view.dart';
 import 'package:bloc_clean_arch/simple_calculator_app_cubit_bloc/presentation/calc_view.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/auth/presentation/themes/light_mode_theme.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/auth/presentation/views/login_page.dart';
+import 'package:bloc_clean_arch/social_app_tik_tok_like/features/auth/presentation/views/register_page.dart';
 import 'package:bloc_clean_arch/todo_app_cubit_bloc/data/local/model/isar_todo.dart';
 import 'package:bloc_clean_arch/todo_app_cubit_bloc/data/repository/isar_todo_repo.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -58,7 +59,7 @@ class _MyAppState extends State<MyApp> {
       //   create: (context) => QuizBloc(),
       //   child: const QuizHomeScreen(),
       // ),
-      home: LoginPage(),
+      home: RegisterPage(),
     );
   }
 }
