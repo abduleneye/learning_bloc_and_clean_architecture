@@ -11,10 +11,11 @@
 
 */
 
-import 'package:bloc_clean_arch/simple_calculator_app_cubit_bloc/presentation/calc_view_component/my_textfield.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/auth/presentation/components/my_social_button.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/auth/presentation/components/my_text_field_social_app.dart';
+import 'package:bloc_clean_arch/social_app_tik_tok_like/features/auth/presentation/cubits_bloc/auth_bloc_cubits.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginPage extends StatefulWidget {
   final void Function()? togglePages;
@@ -31,6 +32,34 @@ class _LoginPageState extends State<LoginPage> {
   // text Controller
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
+  // prepare email and pw
+  void login() {
+    final String email = emailController.text;
+    final String password = passwordController.text;
+
+    //auth bloc-cubit
+    final AuthBlocCubits authBlocCubits = context.read<AuthBlocCubits>();
+
+    //ensure that fields are no empty
+    if (email.isNotEmpty && password.isNotEmpty) {
+      authBlocCubits.login(
+        email,
+        password,
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Please enter both email and password')));
+    }
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
 
               //login button
               MySocialButton(
-                onTap: null,
+                onTap: login,
                 buttonText: 'Login',
               ),
 

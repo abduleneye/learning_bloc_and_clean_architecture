@@ -8,6 +8,7 @@ import 'package:bloc_clean_arch/social_app_tik_tok_like/features/auth/presentati
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/auth/presentation/views/auth_page.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/auth/presentation/views/login_page.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/auth/presentation/views/register_page.dart';
+import 'package:bloc_clean_arch/social_app_tik_tok_like/social_app.dart';
 import 'package:bloc_clean_arch/todo_app_cubit_bloc/data/local/model/isar_todo.dart';
 import 'package:bloc_clean_arch/todo_app_cubit_bloc/data/repository/isar_todo_repo.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -34,9 +35,10 @@ void main() async {
   // final isarTodoRepo = IsarTodoRepo(isar_as_db);
 
   // run app
-  runApp(const MyApp(
-      //todoRepo: isarTodoRepo
-      ));
+  // runApp(const MyApp(
+  //     //todoRepo: isarTodoRepo
+  //     ));
+  runApp(SocialApp());
 }
 
 class MyApp extends StatefulWidget {

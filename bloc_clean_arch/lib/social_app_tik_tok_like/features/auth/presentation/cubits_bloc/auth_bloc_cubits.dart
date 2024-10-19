@@ -39,12 +39,17 @@ class AuthBlocCubits extends Cubit<AuthStates> {
         email,
         password,
       );
+      print('from bloc ${user}');
 
       if (user != null) {
         _currentUser = user;
         emit(Authenticated(user: user));
+        print('auth login');
+        print('from bloc ${user}');
       } else {
+        print('un-auth login');
         emit(Unauthenticated());
+        print('from bloc ${user}');
       }
     } catch (e) {
       emit(AuthErrors(e.toString()));
