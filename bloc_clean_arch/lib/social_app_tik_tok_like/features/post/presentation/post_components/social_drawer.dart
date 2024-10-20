@@ -48,7 +48,7 @@ class MySocialDrawer extends StatelessWidget {
               // settings tile
               SocialDrawerTile(
                 title: 'S E A R C H',
-                icon: Icons.home,
+                icon: Icons.search,
                 onTap: () {},
               ),
 
