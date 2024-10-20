@@ -9,7 +9,7 @@ class FirebaseProfileRepo implements ProfileRepo {
     try {
       //get user doc from firestore
       final userDoc =
-          await firebaseFirestore.collection('users').doc(uid).get();
+          await firebaseFirestore.collection("users").doc(uid).get();
       if (userDoc.exists) {
         final userData = userDoc.data();
         if (userData != null) {
@@ -17,8 +17,8 @@ class FirebaseProfileRepo implements ProfileRepo {
             uid: uid,
             email: userData['email'],
             name: userData['name'],
-            bio: userData['bio'],
-            profileImageUrl: userData['profileImageUrl'],
+            bio: userData['bio'] ?? "",
+            profileImageUrl: userData['profileImageUrl'].toString(),
           );
         }
       }

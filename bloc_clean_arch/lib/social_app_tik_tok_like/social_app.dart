@@ -4,6 +4,9 @@ import 'package:bloc_clean_arch/social_app_tik_tok_like/features/auth/presentati
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/auth/presentation/themes/light_mode_theme.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/auth/presentation/views/auth_page.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/home/presentation/views/social_home_page.dart';
+import 'package:bloc_clean_arch/social_app_tik_tok_like/features/profile/data/repository/firebase_profile_repo.dart';
+import 'package:bloc_clean_arch/social_app_tik_tok_like/features/profile/domain/repository/profile_repo.dart';
+import 'package:bloc_clean_arch/social_app_tik_tok_like/features/profile/presentation/profile_bloc_cubit/profile_bloc_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,10 +29,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 */
 
 final authRepo = FirebaseAuthRepo();
+final profileRepo = FirebaseProfileRepo();
 
 class SocialApp extends StatefulWidget {
-// db injection through the app
-  //final TodoRepo todoRepo;
   const SocialApp({
     super.key, //required this.todoRepo
   });
@@ -41,8 +43,18 @@ class SocialApp extends StatefulWidget {
 class _SocialAppState extends State<SocialApp> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AuthBlocCubits(authRepo: authRepo)..checkAuth(),
+    // provide cubit or bloc to app
+    return MultiBlocProvider(
+      providers: [
+        //auth cubit
+        BlocProvider(
+            create: (context) =>
+                AuthBlocCubits(authRepo: authRepo)..checkAuth()),
+
+        //profile cubit
+        BlocProvider(
+            create: (context) => ProfileBlocCubit(profileRepo: profileRepo))
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: lightMode,
