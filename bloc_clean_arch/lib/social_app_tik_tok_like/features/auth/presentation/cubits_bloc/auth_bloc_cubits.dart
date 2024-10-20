@@ -72,6 +72,7 @@ class AuthBlocCubits extends Cubit<AuthStates> {
       }
     } catch (e) {
       emit(AuthErrors(e.toString()));
+      emit(Unauthenticated());
     }
   }
 

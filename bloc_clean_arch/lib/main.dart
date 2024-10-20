@@ -1,5 +1,5 @@
 import 'package:bloc_clean_arch/counter_app/counter_cubit_bloc/counter_page.dart';
-import 'package:bloc_clean_arch/firebase_options.dart';
+import 'package:bloc_clean_arch/config/firebase_options.dart';
 import 'package:bloc_clean_arch/quiz_app/domain/quiz_bloc/quiz_bloc.dart';
 import 'package:bloc_clean_arch/quiz_app/presentation/home_screen.dart';
 import 'package:bloc_clean_arch/quiz_app/presentation/quiz_screen_view.dart';

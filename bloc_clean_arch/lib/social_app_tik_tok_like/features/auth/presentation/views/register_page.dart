@@ -1,6 +1,9 @@
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/auth/presentation/components/my_social_button.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/auth/presentation/components/my_text_field_social_app.dart';
+import 'package:bloc_clean_arch/social_app_tik_tok_like/features/auth/presentation/cubits_bloc/auth_bloc_cubits.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:isar/isar.dart';
 
 class RegisterPage extends StatefulWidget {
   final void Function()? togglePages;
@@ -18,6 +21,51 @@ class _RegisterPageState extends State<RegisterPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+
+// register button pressed
+
+// register button pressed
+  void register() {
+    // prepare info
+    final String name = nameController.text;
+    final String email = emailController.text;
+    final String password = passwordController.text;
+    final String confirmPassword = confirmPasswordController.text;
+
+    // auth cubit
+
+    final authCubit = context.read<AuthBlocCubits>();
+
+    //ensure the fields aren't empty
+    if (email.isNotEmpty &&
+        name.isNotEmpty &&
+        password.isNotEmpty &&
+        confirmPassword.isNotEmpty) {
+      //ensure password match
+      if (password == confirmPassword) {
+        authCubit.register(
+          email,
+          password,
+          name,
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('passwords do not match')));
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Please complete all fields')));
+    }
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    emailController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +144,9 @@ class _RegisterPageState extends State<RegisterPage> {
 
               //register button
               MySocialButton(
-                onTap: null,
+                onTap: () {
+                  register();
+                },
                 buttonText: 'Register',
               ),
 
