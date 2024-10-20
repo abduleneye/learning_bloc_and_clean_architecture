@@ -3,7 +3,7 @@ import 'package:bloc_clean_arch/social_app_tik_tok_like/features/auth/presentati
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/auth/presentation/cubits_bloc/auth_states.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/auth/presentation/themes/light_mode_theme.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/auth/presentation/views/auth_page.dart';
-import 'package:bloc_clean_arch/social_app_tik_tok_like/features/post/presentation/views/social_home_page.dart';
+import 'package:bloc_clean_arch/social_app_tik_tok_like/features/home/presentation/views/social_home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

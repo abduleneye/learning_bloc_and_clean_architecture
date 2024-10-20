@@ -1,5 +1,8 @@
-import 'package:bloc_clean_arch/social_app_tik_tok_like/features/post/presentation/post_components/social_drawer_tile.dart';
+import 'package:bloc_clean_arch/social_app_tik_tok_like/features/auth/presentation/cubits_bloc/auth_bloc_cubits.dart';
+import 'package:bloc_clean_arch/social_app_tik_tok_like/features/home/presentation/home_components/social_home_drawer_tile.dart';
+import 'package:bloc_clean_arch/social_app_tik_tok_like/features/profile/presentation/profile_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MySocialDrawer extends StatelessWidget {
   const MySocialDrawer({super.key});
@@ -35,14 +38,22 @@ class MySocialDrawer extends StatelessWidget {
               SocialDrawerTile(
                 title: 'H O M E',
                 icon: Icons.home,
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
               ),
 
               // search tile
               SocialDrawerTile(
                 title: 'P R O F I L E',
                 icon: Icons.person,
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ProfilePage()));
+                },
               ),
 
               // settings tile
@@ -58,7 +69,9 @@ class MySocialDrawer extends StatelessWidget {
               SocialDrawerTile(
                 title: 'L O G O U T',
                 icon: Icons.login,
-                onTap: () {},
+                onTap: () {
+                  context.read<AuthBlocCubits>().logout();
+                },
               )
             ],
           ),
