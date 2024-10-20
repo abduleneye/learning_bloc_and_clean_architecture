@@ -47,7 +47,7 @@ class AuthBlocCubits extends Cubit<AuthStates> {
         print('from bloc ${user.email.toString()}');
       } else {
         print('un-auth login');
-        //??????
+        //?????
         emit(Unauthenticated());
         print('from bloc ${user}');
       }
