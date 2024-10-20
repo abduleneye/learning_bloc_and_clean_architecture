@@ -116,7 +116,9 @@ class _LoginPageState extends State<LoginPage> {
 
               //login button
               MySocialButton(
-                onTap: login,
+                onTap: () {
+                  login();
+                },
                 buttonText: 'Login',
               ),
 

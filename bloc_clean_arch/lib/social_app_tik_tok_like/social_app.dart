@@ -72,6 +72,9 @@ class _SocialAppState extends State<SocialApp> {
           }
         }, listener: (context, authStates) {
           if (authStates is AuthErrors) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(authStates.message)));
+
             print('from listener: ' + authStates.message);
           }
         }),
