@@ -7,6 +7,7 @@ import 'package:bloc_clean_arch/social_app_tik_tok_like/features/home/presentati
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/profile/data/repository/firebase_profile_repo.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/profile/domain/repository/profile_repo.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/profile/presentation/profile_bloc_cubit/profile_bloc_cubit.dart';
+import 'package:bloc_clean_arch/social_app_tik_tok_like/features/storage/data/firebase_storage_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -28,8 +29,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
  - authenticated -> home page
 */
 
-final authRepo = FirebaseAuthRepo();
-final profileRepo = FirebaseProfileRepo();
+// auth repo
+final firebaseAuthRepo = FirebaseAuthRepo();
+// profile repo
+final firebaseProfileRepo = FirebaseProfileRepo();
+//storage repo
+final firebaseStorageRepo = FirebaseStorageRepo();
 
 class SocialApp extends StatefulWidget {
   const SocialApp({
@@ -49,11 +54,13 @@ class _SocialAppState extends State<SocialApp> {
         //auth cubit
         BlocProvider(
             create: (context) =>
-                AuthBlocCubits(authRepo: authRepo)..checkAuth()),
+                AuthBlocCubits(authRepo: firebaseAuthRepo)..checkAuth()),
 
         //profile cubit
         BlocProvider(
-            create: (context) => ProfileBlocCubit(profileRepo: profileRepo))
+            create: (context) => ProfileBlocCubit(
+                profileRepo: firebaseProfileRepo,
+                storageRepo: firebaseStorageRepo))
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

@@ -6,6 +6,7 @@ import 'package:bloc_clean_arch/social_app_tik_tok_like/features/profile/present
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/profile/presentation/profile_components.dart/bio_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class ProfilePage extends StatefulWidget {
   final String uid;
@@ -75,21 +76,33 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
 
             //profile pic
-            Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.secondary,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              height: 120,
-              width: 120,
-              padding: const EdgeInsets.all(25),
-              child: Center(
-                child: Icon(
+            CachedNetworkImage(
+              imageUrl: user.profileImageUrl,
+              //loading...
+              placeholder: (context, url) {
+                return const CircularProgressIndicator();
+              },
+              // error -> failed to load
+              errorWidget: (context, url, error) {
+                return Icon(
                   Icons.person,
                   size: 72,
                   color: Theme.of(context).colorScheme.primary,
-                ),
-              ),
+                );
+              },
+
+              //loaded
+              imageBuilder: (context, imageProvider) {
+                return Container(
+                    height: 120,
+                    width: 120,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.cover,
+                        )));
+              },
             ),
             const SizedBox(
               height: 25,

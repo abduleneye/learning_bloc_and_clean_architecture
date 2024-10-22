@@ -1,10 +1,15 @@
+import 'dart:typed_data';
+
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/profile/domain/repository/profile_repo.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/profile/presentation/profile_bloc_cubit/profile_state.dart';
+import 'package:bloc_clean_arch/social_app_tik_tok_like/features/storage/domain/storage_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfileBlocCubit extends Cubit<ProfileState> {
   final ProfileRepo profileRepo;
-  ProfileBlocCubit({required this.profileRepo}) : super(ProfileInitial());
+  final StorageRepo storageRepo;
+  ProfileBlocCubit({required this.profileRepo, required this.storageRepo})
+      : super(ProfileInitial());
 
   // fetch user profile using repo
   Future<void> fetchUserProfile(String uid) async {
@@ -28,6 +33,8 @@ class ProfileBlocCubit extends Cubit<ProfileState> {
   Future<void> updateProfile({
     required String uid,
     String? newBio,
+    Uint8List? imageWebBytes,
+    String? imageMobilePath,
   }) async {
     print(newBio);
     emit(ProfileLoading());
@@ -42,10 +49,32 @@ class ProfileBlocCubit extends Cubit<ProfileState> {
       }
 
       // profile picture update
+      String? imageDownloadUrl;
+
+      //ensure there is an image
+      if (imageWebBytes != null || imageMobilePath != null) {
+        //for mobile
+        if (imageMobilePath != null) {
+          //upload
+          imageDownloadUrl =
+              await storageRepo.uploadProfileImagesMobile(imageMobilePath, uid);
+        }
+        // for web
+        else if (imageWebBytes != null) {
+          //upload
+          imageDownloadUrl =
+              await storageRepo.uploadProfileImageWeb(imageWebBytes, uid);
+        }
+      }
+      if (imageDownloadUrl == null) {
+        emit(ProfileError('failed to upload image'));
+      }
 
       // update new profile
-      final updatedProfile =
-          currentUser.copyWith(newBio: newBio ?? currentUser.bio);
+      final updatedProfile = currentUser.copyWith(
+        newBio: newBio ?? currentUser.bio,
+        newProfileImageUrl: imageDownloadUrl ?? currentUser.profileImageUrl,
+      );
 
       // update in repo
       await profileRepo.updateProfile(updatedProfile);
