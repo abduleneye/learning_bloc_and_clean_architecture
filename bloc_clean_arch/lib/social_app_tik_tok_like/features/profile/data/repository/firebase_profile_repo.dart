@@ -30,8 +30,11 @@ class FirebaseProfileRepo implements ProfileRepo {
 
   @override
   Future<void> updateProfile(ProfileUser updatedProfile) async {
+    print('bio from repo: ${updatedProfile.bio}');
     try {
       // convert updated profile to json to store in  firestore
+      print('attempting to update profile from repo impl');
+
       await firebaseFirestore
           .collection('users')
           .doc(updatedProfile.uid)
@@ -40,6 +43,7 @@ class FirebaseProfileRepo implements ProfileRepo {
         'profileImageUrl': updatedProfile.profileImageUrl
       });
     } catch (e) {
+      print('error updating profile from repo impl$e');
       throw Exception(e);
     }
   }

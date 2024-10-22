@@ -1,5 +1,6 @@
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/auth/domain/entities/app_user.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/auth/presentation/cubits_bloc/auth_bloc_cubits.dart';
+import 'package:bloc_clean_arch/social_app_tik_tok_like/features/profile/presentation/views/edit_profile_page.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/profile/presentation/profile_bloc_cubit/profile_bloc_cubit.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/profile/presentation/profile_bloc_cubit/profile_state.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/profile/presentation/profile_components.dart/bio_box.dart';
@@ -26,7 +27,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   void initState() {
-    profileCubit.fecthUserProfile(widget.uid);
+    profileCubit.fetchUserProfile(widget.uid);
 
     super.initState();
   }
@@ -49,7 +50,17 @@ class _ProfilePageState extends State<ProfilePage> {
             foregroundColor: Theme.of(context).colorScheme.primary,
             actions: [
               //edit profile button
-              IconButton(onPressed: () {}, icon: const Icon(Icons.settings))
+              IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EditProfilePage(
+                            user: user,
+                          ),
+                        ));
+                  },
+                  icon: const Icon(Icons.settings))
             ],
           ),
           body: Column(children: [

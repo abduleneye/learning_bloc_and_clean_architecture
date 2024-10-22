@@ -7,7 +7,7 @@ class ProfileBlocCubit extends Cubit<ProfileState> {
   ProfileBlocCubit({required this.profileRepo}) : super(ProfileInitial());
 
   // fetch user profile using repo
-  Future<void> fecthUserProfile(String uid) async {
+  Future<void> fetchUserProfile(String uid) async {
     try {
       print('attempting to fetch user details');
       emit(ProfileLoading());
@@ -29,6 +29,7 @@ class ProfileBlocCubit extends Cubit<ProfileState> {
     required String uid,
     String? newBio,
   }) async {
+    print(newBio);
     emit(ProfileLoading());
 
     try {
@@ -48,11 +49,13 @@ class ProfileBlocCubit extends Cubit<ProfileState> {
 
       // update in repo
       await profileRepo.updateProfile(updatedProfile);
+      print('Updating...');
 
       //re-fetch the updated profile
-      await profileRepo.fetchUserProfile(uid);
+      await fetchUserProfile(uid);
     } catch (e) {
       emit(ProfileError('Error updating profile: $e'));
+      print(e);
     }
   }
 }
