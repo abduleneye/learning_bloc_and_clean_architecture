@@ -31,6 +31,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   // pick image
   Future<void> pickImage() async {
     final result = await FilePicker.platform.pickFiles(
+      compressionQuality: 0,
       type: FileType.image,
       withData: kIsWeb,
     );
@@ -129,8 +130,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
             height: 200,
             width: 200,
             decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.secondary,
-                shape: BoxShape.circle),
+              color: Theme.of(context).colorScheme.secondary,
+              shape: BoxShape.circle,
+            ),
+            clipBehavior: Clip.hardEdge,
             child:
                 // display selected image for mobile
                 (!kIsWeb && imagePickedFile != null)
@@ -160,7 +163,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                             //loaded
                             imageBuilder: (context, imageProvider) {
-                              return Image(image: imageProvider);
+                              return Image(
+                                image: imageProvider,
+                                fit: BoxFit.cover,
+                              );
                             },
                           ),
           )),

@@ -94,14 +94,16 @@ class _ProfilePageState extends State<ProfilePage> {
               //loaded
               imageBuilder: (context, imageProvider) {
                 return Container(
-                    height: 120,
-                    width: 120,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: imageProvider,
-                          fit: BoxFit.cover,
-                        )));
+                  height: 120,
+                  width: 120,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.cover,
+                      )),
+                  clipBehavior: Clip.hardEdge,
+                );
               },
             ),
             const SizedBox(
