@@ -21,7 +21,7 @@ class EditProfilePage extends StatefulWidget {
 
 class _EditProfilePageState extends State<EditProfilePage> {
   // mobile image picker
-  PlatformFile? imagePickedFile;
+  PlatformFile? mobileImagePickedFile;
 
   //web image pick
   Uint8List? webImage;
@@ -38,9 +38,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
     if (result != null) {
       setState(() {
-        imagePickedFile = result.files.first;
+        mobileImagePickedFile = result.files.first;
         if (kIsWeb) {
-          webImage = imagePickedFile!.bytes;
+          webImage = mobileImagePickedFile!.bytes;
         }
       });
     }
@@ -55,11 +55,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
     final String uid = widget.user.uid;
     final String? newBio =
         bioTextController.text.isNotEmpty ? bioTextController.text : null;
-    final imageMobilePath = kIsWeb ? null : imagePickedFile?.path;
-    final imageWebBytes = kIsWeb ? imagePickedFile?.bytes : null;
+    final imageMobilePath = kIsWeb ? null : mobileImagePickedFile?.path;
+    final imageWebBytes = kIsWeb ? mobileImagePickedFile?.bytes : null;
 
     // only update profile if there is something to update
-    if (imagePickedFile != null || newBio != null) {
+    if (mobileImagePickedFile != null || newBio != null) {
       updateprofile.updateProfile(
           uid: widget.user.uid,
           newBio: bioTextController.text,
@@ -136,9 +136,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
             clipBehavior: Clip.hardEdge,
             child:
                 // display selected image for mobile
-                (!kIsWeb && imagePickedFile != null)
+                (!kIsWeb && mobileImagePickedFile != null)
                     ? Image.file(
-                        File(imagePickedFile!.path!),
+                        File(mobileImagePickedFile!.path!),
                       )
                     :
                     //display selected image for web
