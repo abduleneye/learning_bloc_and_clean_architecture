@@ -7,7 +7,7 @@ class FirebasePostRepoImlementation implements PostRepo {
 
   // store the post in a collection called 'posts'
   final CollectionReference postCollection =
-      FirebaseFirestore.instance.collection('posts');
+      FirebaseFirestore.instance.collection("posts");
 
   @override
   Future<void> createPost(Post post) async {
@@ -21,14 +21,18 @@ class FirebasePostRepoImlementation implements PostRepo {
   @override
   Future<List<Post>> fetchAllPosts() async {
     try {
-      // get all post eith the most recent posts at the top
-      final postsSnapShot =
-          await postCollection.orderBy('timestamp', descending: true).get();
+      final postsSnapShot = await postCollection.get();
+      // This .orderFunction was preventin fecthingPosts: final postsSnapShot = await postCollection.orderBy('timestamp', descending: true).get();
+
+      // print('Returned post ${postsSnapShot.docs.toList()}');
+      // print('Returned post ${directPost.docs.toList()}');
 
       // convert each firestore doc fro json -> list of posts
       final List<Post> allPosts = postsSnapShot.docs
           .map((doc) => Post.fromJson(doc.data() as Map<String, dynamic>))
           .toList();
+
+      print('Your returned post $allPosts');
 
       return allPosts;
     } catch (e) {

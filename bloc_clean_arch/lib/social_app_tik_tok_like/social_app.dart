@@ -4,6 +4,8 @@ import 'package:bloc_clean_arch/social_app_tik_tok_like/features/auth/presentati
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/auth/presentation/themes/light_mode_theme.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/auth/presentation/views/auth_page.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/home/presentation/views/social_home_page.dart';
+import 'package:bloc_clean_arch/social_app_tik_tok_like/features/posts/data/firebase_post_repo_imlementation.dart';
+import 'package:bloc_clean_arch/social_app_tik_tok_like/features/posts/presentation/posts_cubit_bloc/post_cubit_bloc.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/profile/data/repository/firebase_profile_repo.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/profile/domain/repository/profile_repo.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/profile/presentation/profile_bloc_cubit/profile_bloc_cubit.dart';
@@ -36,6 +38,9 @@ final firebaseProfileRepo = FirebaseProfileRepo();
 //storage repo
 final firebaseStorageRepo = FirebaseStorageRepo();
 
+//post repo
+final firebasePostRepoImlementation = FirebasePostRepoImlementation();
+
 class SocialApp extends StatefulWidget {
   const SocialApp({
     super.key, //required this.todoRepo
@@ -51,16 +56,22 @@ class _SocialAppState extends State<SocialApp> {
     // provide cubit or bloc to app
     return MultiBlocProvider(
       providers: [
-        //auth cubit
+        //post cubit
         BlocProvider(
-            create: (context) =>
-                AuthBlocCubits(authRepo: firebaseAuthRepo)..checkAuth()),
-
+            create: (context) => PostCubitsBloc(
+                  postRepo: firebasePostRepoImlementation,
+                  storageRepo: firebaseStorageRepo,
+                )),
         //profile cubit
         BlocProvider(
             create: (context) => ProfileBlocCubit(
                 profileRepo: firebaseProfileRepo,
-                storageRepo: firebaseStorageRepo))
+                storageRepo: firebaseStorageRepo)),
+
+        //auth cubit
+        BlocProvider(
+            create: (context) =>
+                AuthBlocCubits(authRepo: firebaseAuthRepo)..checkAuth()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/auth/domain/entities/app_user.dart';
+import 'package:bloc_clean_arch/social_app_tik_tok_like/features/auth/presentation/components/my_text_field_social_app.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/auth/presentation/cubits_bloc/auth_bloc_cubits.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/posts/domain/post_entities.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/posts/presentation/posts_cubit_bloc/post_cubit_bloc.dart';
@@ -102,26 +105,63 @@ class _UploadPostPageState extends State<UploadPostPage> {
     //SCAFFOLD
     return BlocConsumer<PostCubitsBloc, PostsState>(
         builder: (context, postState) {
-          if (postState is PostsLoading || postState is PostsUploading) {
-            return const Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(),
-              ),
-            );
-          } else {
-            // Build Upload page
-            return buildUploadPage();
-          }
-        },
-        listener: (context, postState) {});
+      if (postState is PostsLoading || postState is PostsUploading) {
+        return const Scaffold(
+          body: Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
+      } else {
+        // Build Upload page
+        return buildUploadPage();
+      }
+    }, listener: (context, postState) {
+      if (postState is PostsLoaded) {
+        Navigator.pop(context);
+      }
+    });
   }
 
   Widget buildUploadPage() {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Create Post'),
-        foregroundColor: Theme.of(context).colorScheme.primary,
-      ),
-    );
+        appBar: AppBar(
+          title: const Text('Create Post'),
+          foregroundColor: Theme.of(context).colorScheme.primary,
+          actions: [
+            IconButton(
+              onPressed: uploadPost,
+              icon: const Icon(Icons.upload),
+            )
+          ],
+        ),
+
+        //BODY
+        body: Center(
+          child: Column(
+            children: [
+              // image preview for web
+              if (kIsWeb && mobileImagePickedFile != null)
+                Image.memory(webImage!),
+
+              // image preview for mobile
+              if (!kIsWeb && mobileImagePickedFile != null)
+                Image.file(File(mobileImagePickedFile!.path!)),
+
+              //pick image button
+              MaterialButton(
+                onPressed: pickImage,
+                color: Colors.blue,
+                child: const Text('Pick Image'),
+              ),
+
+              //caption Text box
+              MyTextFieldSocialApp(
+                controller: captionTextController,
+                hintText: 'caption',
+                obscureText: false,
+              ),
+            ],
+          ),
+        ));
   }
 }

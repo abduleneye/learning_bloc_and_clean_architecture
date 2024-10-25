@@ -23,13 +23,12 @@ class PostCubitsBloc extends Cubit<PostsState> {
       // handle image upload for mobiel platforms (using file path)
       if (imagepath != null) {
         emit(PostsUploading());
-        imageUrl =
-            await storageRepo.uploadProfileImagesMobile(imagepath, post.id);
+        imageUrl = await storageRepo.uploadPostImagesMobile(imagepath, post.id);
       }
 
       // handle image uploading for the web
       else if (imageBytes != null) {
-        imageUrl = await storageRepo.uploadProfileImageWeb(imageBytes, post.id);
+        imageUrl = await storageRepo.uploadPostImageWeb(imageBytes, post.id);
       }
 
       // give image url to post
@@ -37,6 +36,9 @@ class PostCubitsBloc extends Cubit<PostsState> {
 
       // create new post in the backend
       postRepo.createPost(newPost);
+
+      // re-fetch all posts
+      fetchAllPosts();
     } catch (e) {
       emit(PostsError('An error occured while creating post $e'));
     }
