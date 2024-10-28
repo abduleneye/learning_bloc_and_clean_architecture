@@ -7,27 +7,28 @@ class Post {
   final String text;
   final String imageUrl;
   final DateTime timeStamp;
+  final List<String> likes;
 
-  Post({
-    required this.id,
-    required this.userId,
-    required this.userName,
-    required this.text,
-    required this.imageUrl,
-    required this.timeStamp,
-  });
+  Post(
+      {required this.id,
+      required this.userId,
+      required this.userName,
+      required this.text,
+      required this.imageUrl,
+      required this.timeStamp,
+      required this.likes});
 
   //copy with method for updating this class or other classes:
 
   Post copyWith({String? imageUrl}) {
     return Post(
-      id: id,
-      userId: userId,
-      userName: userName,
-      text: text,
-      imageUrl: imageUrl ?? this.imageUrl,
-      timeStamp: timeStamp,
-    );
+        id: id,
+        userId: userId,
+        userName: userName,
+        text: text,
+        imageUrl: imageUrl ?? this.imageUrl,
+        timeStamp: timeStamp,
+        likes: likes);
   }
 
   // convert post object to json file to store in firebase
@@ -39,6 +40,7 @@ class Post {
       'text': text,
       'imageUrl': imageUrl,
       'timeStamp': Timestamp.fromDate(timeStamp),
+      'likes': likes
     };
   }
 
@@ -50,6 +52,7 @@ class Post {
         userName: json['userName'],
         text: json['text'],
         imageUrl: json['imageUrl'],
-        timeStamp: (json['timeStamp'] as Timestamp).toDate());
+        timeStamp: (json['timeStamp'] as Timestamp).toDate(),
+        likes: List<String>.from(json['likes'] ?? []));
   }
 }

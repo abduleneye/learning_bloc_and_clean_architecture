@@ -4,7 +4,7 @@ import 'package:bloc_clean_arch/social_app_tik_tok_like/features/auth/presentati
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/auth/presentation/themes/light_mode_theme.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/auth/presentation/views/auth_page.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/home/presentation/views/social_home_page.dart';
-import 'package:bloc_clean_arch/social_app_tik_tok_like/features/posts/data/firebase_post_repo_imlementation.dart';
+import 'package:bloc_clean_arch/social_app_tik_tok_like/features/posts/data/firebase_post_repo_implementation.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/posts/presentation/posts_cubit_bloc/post_cubit_bloc.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/profile/data/repository/firebase_profile_repo.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/profile/domain/repository/profile_repo.dart';

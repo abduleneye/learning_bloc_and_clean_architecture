@@ -1,8 +1,8 @@
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/home/presentation/home_components/social_home_drawer.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/posts/presentation/pages/upload_post_page.dart';
+import 'package:bloc_clean_arch/social_app_tik_tok_like/features/posts/presentation/post_component/post_tile.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/posts/presentation/posts_cubit_bloc/post_cubit_bloc.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/posts/presentation/posts_cubit_bloc/post_state.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,6 +26,12 @@ class _SocialHomePageState extends State<SocialHomePage> {
   // fetch all posts
   void fetchAllPosts() {
     postCubit.fetchAllPosts();
+  }
+
+  // delete post
+  void deletePost(String postId) {
+    postCubit.deletePost(postId);
+    fetchAllPosts();
   }
 
   //BUILD UI
@@ -78,17 +84,11 @@ class _SocialHomePageState extends State<SocialHomePage> {
                     final post = allPosts[index];
 
                     //image
-                    return CachedNetworkImage(
-                      imageUrl: post.imageUrl,
-                      height: 430,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                      placeholder: (context, url) => const SizedBox(
-                        height: 430,
-                      ),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
-                    );
+                    return PostTile(
+                        post: post,
+                        onDeletePressed: () {
+                          deletePost(post.id);
+                        });
 
                     //
                   });

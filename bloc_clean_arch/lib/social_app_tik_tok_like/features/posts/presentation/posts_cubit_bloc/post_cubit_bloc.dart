@@ -74,4 +74,14 @@ class PostCubitsBloc extends Cubit<PostsState> {
       emit(PostsError('Failed to fetch post by uId $e'));
     }
   }
+
+  // toggle like post
+  Future<void> toggleLikePost(String postId, String userId) async {
+    try {
+      await postRepo.toggleLikePost(postId, userId);
+      //fetchAllPosts();
+    } catch (e) {
+      emit(PostsError("Failed to like post: $e "));
+    }
+  }
 }

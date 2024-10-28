@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:bloc_clean_arch/social_app_tik_tok_like/features/profile/domain/entities/profile_user.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/profile/domain/repository/profile_repo.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/profile/presentation/profile_bloc_cubit/profile_state.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/storage/domain/storage_repo.dart';
@@ -11,7 +12,7 @@ class ProfileBlocCubit extends Cubit<ProfileState> {
   ProfileBlocCubit({required this.profileRepo, required this.storageRepo})
       : super(ProfileInitial());
 
-  // fetch user profile using repo
+  // fetch user profile using repo -> useful for loading single profile pages
   Future<void> fetchUserProfile(String uid) async {
     try {
       print('attempting to fetch user details');
@@ -27,6 +28,12 @@ class ProfileBlocCubit extends Cubit<ProfileState> {
       print('Error from fetch user: $e');
       emit(ProfileError(e.toString()));
     }
+  }
+
+  // retun  user profile given uid -> useful for loading many profiles for posts
+  Future<ProfileUser?> getUserProfile(String uid) async {
+    final user = await profileRepo.fetchUserProfile(uid);
+    return user;
   }
 
   // update bio and or profile picture
