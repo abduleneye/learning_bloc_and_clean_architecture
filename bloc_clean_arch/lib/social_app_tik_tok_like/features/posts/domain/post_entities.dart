@@ -1,3 +1,4 @@
+import 'package:bloc_clean_arch/social_app_tik_tok_like/features/posts/domain/comment_entities.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Post {
@@ -8,6 +9,7 @@ class Post {
   final String imageUrl;
   final DateTime timeStamp;
   final List<String> likes;
+  final List<Comment> comments;
 
   Post(
       {required this.id,
@@ -16,7 +18,8 @@ class Post {
       required this.text,
       required this.imageUrl,
       required this.timeStamp,
-      required this.likes});
+      required this.likes,
+      required this.comments});
 
   //copy with method for updating this class or other classes:
 
@@ -28,7 +31,8 @@ class Post {
         text: text,
         imageUrl: imageUrl ?? this.imageUrl,
         timeStamp: timeStamp,
-        likes: likes);
+        likes: likes,
+        comments: comments);
   }
 
   // convert post object to json file to store in firebase
@@ -40,12 +44,18 @@ class Post {
       'text': text,
       'imageUrl': imageUrl,
       'timeStamp': Timestamp.fromDate(timeStamp),
-      'likes': likes
+      'likes': likes,
+      'comments': comments.map((comment) => comment.toJson()).toList()
     };
   }
 
   //conver json post file back to post object to use in our app
   factory Post.fromJson(Map<String, dynamic> json) {
+    // prepare comments
+    final List<Comment> comments = (json['comments'] as List<dynamic>?)
+            ?.map((commentJson) => Comment.fromJson(commentJson))
+            .toList() ??
+        [];
     return Post(
         id: json['id'],
         userId: json['userId'],
@@ -53,6 +63,7 @@ class Post {
         text: json['text'],
         imageUrl: json['imageUrl'],
         timeStamp: (json['timeStamp'] as Timestamp).toDate(),
-        likes: List<String>.from(json['likes'] ?? []));
+        likes: List<String>.from(json['likes'] ?? []),
+        comments: comments);
   }
 }

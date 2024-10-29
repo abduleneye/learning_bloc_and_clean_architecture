@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:bloc_clean_arch/social_app_tik_tok_like/features/posts/domain/comment_entities.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/posts/domain/post_entities.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/posts/domain/post_repo.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/posts/presentation/posts_cubit_bloc/post_state.dart';
@@ -82,6 +83,32 @@ class PostCubitsBloc extends Cubit<PostsState> {
       //fetchAllPosts();
     } catch (e) {
       emit(PostsError("Failed to like post: $e "));
+    }
+  }
+
+  //add a comment
+  Future<void> addComment(String postId, Comment comment) async {
+    try {
+      await postRepo.addComment(
+        postId,
+        comment,
+      );
+
+      await fetchAllPosts();
+    } catch (e) {
+      emit(PostsError("Failed to add comment: $e "));
+    }
+  }
+
+  Future<void> deleteComment(String postId, String commentId) async {
+    try {
+      await postRepo.deleteComment(
+        postId,
+        commentId,
+      );
+      await fetchAllPosts();
+    } catch (e) {
+      emit(PostsError("Failed to delete comment: $e "));
     }
   }
 }

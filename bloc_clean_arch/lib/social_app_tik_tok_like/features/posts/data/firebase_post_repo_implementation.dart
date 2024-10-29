@@ -1,3 +1,4 @@
+import 'package:bloc_clean_arch/social_app_tik_tok_like/features/posts/domain/comment_entities.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/posts/domain/post_entities.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/posts/domain/post_repo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -86,6 +87,54 @@ class FirebasePostRepoImlementation implements PostRepo {
       }
     } catch (e) {
       throw Exception("Error toggling like: $e ");
+    }
+  }
+
+  @override
+  Future<void> addComment(String postId, Comment comment) async {
+    try {
+      // get post doc
+      final postDoc = await postCollection.doc(postId).get();
+      if (postDoc.exists) {
+        //conv json object to post
+        final post = Post.fromJson(postDoc.data() as Map<String, dynamic>);
+
+        //add the new comment
+        post.comments.add(comment);
+
+        //update the post doc with the new comment
+        await postCollection.doc(postId).update({
+          'comments': post.comments.map((comment) => comment.toJson()).toList()
+        });
+      } else {
+        throw Exception('Post not found');
+      }
+    } catch (e) {
+      throw Exception("Error adding comment: $e");
+    }
+  }
+
+  @override
+  Future<void> deleteComment(String postId, String commentId) async {
+    try {
+      // get post doc
+      final postDoc = await postCollection.doc(postId).get();
+      if (postDoc.exists) {
+        //conv json object to post
+        final post = Post.fromJson(postDoc.data() as Map<String, dynamic>);
+
+        //add the new comment
+        post.comments.removeWhere((comment) => comment.id == commentId);
+
+        //update the post doc with the new comment
+        await postCollection.doc(postId).update({
+          'comments': post.comments.map((comment) => comment.toJson()).toList()
+        });
+      } else {
+        throw Exception('Post not found');
+      }
+    } catch (e) {
+      throw Exception("Error deleting comment: $e");
     }
   }
 }

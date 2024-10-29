@@ -80,7 +80,8 @@ class _UploadPostPageState extends State<UploadPostPage> {
         text: captionTextController.text,
         imageUrl: '',
         timeStamp: DateTime.now(),
-        likes: []);
+        likes: [],
+        comments: []);
 
     // post cubit
     final postCubit = context.read<PostCubitsBloc>();
