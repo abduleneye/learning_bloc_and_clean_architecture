@@ -1,5 +1,8 @@
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/auth/domain/entities/app_user.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/auth/presentation/cubits_bloc/auth_bloc_cubits.dart';
+import 'package:bloc_clean_arch/social_app_tik_tok_like/features/posts/presentation/post_component/post_tile.dart';
+import 'package:bloc_clean_arch/social_app_tik_tok_like/features/posts/presentation/posts_cubit_bloc/post_cubit_bloc.dart';
+import 'package:bloc_clean_arch/social_app_tik_tok_like/features/posts/presentation/posts_cubit_bloc/post_state.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/profile/presentation/views/edit_profile_page.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/profile/presentation/profile_bloc_cubit/profile_bloc_cubit.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/profile/presentation/profile_bloc_cubit/profile_state.dart';
@@ -23,6 +26,9 @@ class _ProfilePageState extends State<ProfilePage> {
 
   // current user
   late AppUser? currentUser = authCubit.currentuser;
+
+  // posts
+  int postCount = 0;
 
   // on startup
 
@@ -64,11 +70,13 @@ class _ProfilePageState extends State<ProfilePage> {
                   icon: const Icon(Icons.settings))
             ],
           ),
-          body: Column(children: [
+          body: ListView(children: [
             //email
-            Text(
-              user.email,
-              style: TextStyle(color: Theme.of(context).colorScheme.primary),
+            Center(
+              child: Text(
+                user.email,
+                style: TextStyle(color: Theme.of(context).colorScheme.primary),
+              ),
             ),
 
             const SizedBox(
@@ -146,6 +154,48 @@ class _ProfilePageState extends State<ProfilePage> {
                 ],
               ),
             ),
+            const SizedBox(
+              height: 10,
+            ),
+            //lists of post from this user
+            BlocBuilder<PostCubitsBloc, PostsState>(
+                builder: (context, postState) {
+              // posts loaded
+              if (postState is PostsLoaded) {
+                //filter post by user id
+                final userPosts = postState.posts
+                    .where((post) => post.userId == widget.uid)
+                    .toList();
+
+                postCount = userPosts.length;
+
+                return ListView.builder(
+                    itemCount: postCount,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      //get individual post and
+                      final post = userPosts[index];
+
+                      // return it as a post tile UI
+                      PostTile(
+                          post: post,
+                          onDeletePressed: () {
+                            context.read<PostCubitsBloc>().deletePost(post.id);
+                          });
+                    });
+              }
+              //post loading...
+              else if (postState is PostsLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else {
+                return const Center(
+                  child: Text('This user hasn\'t posted yet'),
+                );
+              }
+            })
           ]),
         );
       } else if (profileState is ProfileLoading) {

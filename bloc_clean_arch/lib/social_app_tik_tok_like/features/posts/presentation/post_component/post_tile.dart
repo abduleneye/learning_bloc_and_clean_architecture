@@ -8,6 +8,7 @@ import 'package:bloc_clean_arch/social_app_tik_tok_like/features/posts/presentat
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/posts/presentation/posts_cubit_bloc/post_state.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/profile/domain/entities/profile_user.dart';
 import 'package:bloc_clean_arch/social_app_tik_tok_like/features/profile/presentation/profile_bloc_cubit/profile_bloc_cubit.dart';
+import 'package:bloc_clean_arch/social_app_tik_tok_like/features/profile/presentation/views/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -192,52 +193,62 @@ class _PostTileState extends State<PostTile> {
             ));
   }
 
+  //BUILD UI
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Theme.of(context).colorScheme.secondary,
       child: Column(children: [
         // Top section: profile pic / name / delete button
-        Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-            // profile pic
-            postUser?.profileImageUrl != null
-                ? CachedNetworkImage(
-                    imageUrl: postUser!.profileImageUrl,
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.person),
-                    imageBuilder: (context, imageProvider) => Container(
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                image: imageProvider,
-                                fit: BoxFit.cover,
-                              )),
-                        ))
-                : const Icon(Icons.person),
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        ProfilePage(uid: widget.post.userId)));
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+              // profile pic
+              postUser?.profileImageUrl != null
+                  ? CachedNetworkImage(
+                      imageUrl: postUser!.profileImageUrl,
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.person),
+                      imageBuilder: (context, imageProvider) => Container(
+                            width: 40,
+                            height: 40,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  image: imageProvider,
+                                  fit: BoxFit.cover,
+                                )),
+                          ))
+                  : const Icon(Icons.person),
 
-            const SizedBox(
-              width: 10,
-            ),
+              const SizedBox(
+                width: 10,
+              ),
 
-            //name
-            Text(widget.post.userName),
+              //name
+              Text(widget.post.userName),
 
-            const Spacer(),
+              const Spacer(),
 
-            //delete button
-            if (isOwnPost)
-              GestureDetector(
-                onTap: showDeletionDialogBox,
-                child: Icon(
-                  Icons.delete,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-              )
-          ]),
+              //delete button
+              if (isOwnPost)
+                GestureDetector(
+                  onTap: showDeletionDialogBox,
+                  child: Icon(
+                    Icons.delete,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                )
+            ]),
+          ),
         ),
 
         // Image

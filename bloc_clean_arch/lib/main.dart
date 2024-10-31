@@ -1,3 +1,8 @@
+import 'package:bloc_clean_arch/api_apps/movie_api_call/data/local/movies_api_request_repo_implementation.dart';
+import 'package:bloc_clean_arch/api_apps/movie_api_call/presentation/movie_screen.dart';
+import 'package:bloc_clean_arch/api_apps/movie_api_call/presentation/movies_api_bloc/movies_bloc.dart';
+import 'package:bloc_clean_arch/countdown_timer/presentation/count_down_screen.dart';
+import 'package:bloc_clean_arch/countdown_timer/presentation/countdown_bloc_statemanagement/countdown_bloc.dart';
 import 'package:bloc_clean_arch/counter_app/counter_cubit_bloc/counter_page.dart';
 import 'package:bloc_clean_arch/config/firebase_options.dart';
 import 'package:bloc_clean_arch/quiz_app/domain/quiz_bloc/quiz_bloc.dart';
@@ -38,7 +43,7 @@ void main() async {
   // runApp(const MyApp(
   //     //todoRepo: isarTodoRepo
   //     ));
-  runApp(SocialApp());
+  runApp(const SocialApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -53,6 +58,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final movieRepo = MoviesApiRequestRepoImplementation();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -62,7 +69,11 @@ class _MyAppState extends State<MyApp> {
       //   create: (context) => QuizBloc(),
       //   child: const QuizHomeScreen(),
       // ),
-      home: const AuthPage(),
+      //home: const AuthPage(),
+      home: BlocProvider(
+        create: (context) => MoviesBloc(movieRepo),
+        child: const AuthPage(),
+      ),
     );
   }
 }
