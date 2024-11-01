@@ -16,7 +16,10 @@ class _QuizModeHomeScreenState extends State<QuizModeHomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('QuizHomeScreen'),
+        title: const Text(
+          'Q U I Z  H O M E',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
       ),
       body: Center(
         child: SingleChildScrollView(

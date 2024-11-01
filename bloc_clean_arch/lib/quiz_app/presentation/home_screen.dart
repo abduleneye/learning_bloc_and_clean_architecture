@@ -37,21 +37,24 @@ class QuizHomeScreen extends StatefulWidget {
 class _QuizHomeScreenState extends State<QuizHomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<QuizBloc, QuizStates>(
-      listener: (context, state) {},
-      builder: (context, state) {
-        if (state.currentScreen == 'mode_screen') {
-          return const QuizModeHomeScreen();
-        } else if (state.currentScreen == 'offline_mode_screen') {
-          return const OfflineCategoryScreen();
-        } else if (state.currentScreen == 'quiz_screen') {
-          return const MyQuizScreen();
-        } else {
-          return const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
-          );
-        }
-      },
+    return BlocProvider(
+      create: (context) => QuizBloc(),
+      child: BlocConsumer<QuizBloc, QuizStates>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          if (state.currentScreen == 'mode_screen') {
+            return const QuizModeHomeScreen();
+          } else if (state.currentScreen == 'offline_mode_screen') {
+            return const OfflineCategoryScreen();
+          } else if (state.currentScreen == 'quiz_screen') {
+            return const MyQuizScreen();
+          } else {
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            );
+          }
+        },
+      ),
     );
   }
 }
