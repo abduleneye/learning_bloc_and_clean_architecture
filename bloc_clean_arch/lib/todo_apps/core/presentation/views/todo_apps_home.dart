@@ -1,8 +1,6 @@
-import 'package:bloc_clean_arch/api_apps/movie_api_call/data/local/movies_api_request_repo_implementation.dart';
 import 'package:bloc_clean_arch/simple_calculator_app_cubit_bloc/presentation/calc_view_component/my_button.dart';
 import 'package:bloc_clean_arch/todo_app_cubit_bloc/data/local/model/isar_todo.dart';
 import 'package:bloc_clean_arch/todo_app_cubit_bloc/data/repository/isar_todo_repo.dart';
-import 'package:bloc_clean_arch/todo_app_cubit_bloc/domain/repoistory/todo_repo.dart';
 import 'package:bloc_clean_arch/todo_app_cubit_bloc/presentation/todo_cubit.dart';
 import 'package:bloc_clean_arch/todo_app_cubit_bloc/presentation/todo_view.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +16,57 @@ class TodoAppsHome extends StatefulWidget {
 }
 
 class _TodoAppsHomeState extends State<TodoAppsHome> {
+  Isar? _db;
+  late final IsarTodoRepo todoRepo;
+
+  //Convinience function for getting current db
+  // Isar _getDataBaseOrThrow() {
+  //   final db = _db;
+  //   if (db == null) {
+  //     throw Exception();
+  //   } else {
+  //     return db;
+  //   }
+  // }
+
+  Future<void> _ensureDbIsOpen() async {
+    try {
+      await openDb();
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<void> openDb() async {
+    if (_db != null) {}
+    try {
+      //late final Isar isar_as_db;
+
+      //get directory path for storing the data
+      final dir = await getApplicationDocumentsDirectory();
+      // open isar db
+      final db = await Isar.open([TodoIsarSchema], directory: dir.path);
+      todoRepo = IsarTodoRepo(db);
+
+      _db = db;
+    } catch (e) {}
+  }
+
+  Future<void> closeDb() async {
+    final db = _db;
+    if (db == null) {
+    } else {
+      await db.close();
+      _db = null;
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    closeDb();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,14 +82,8 @@ class _TodoAppsHomeState extends State<TodoAppsHome> {
             children: [
               MyButton(
                   onTap: () async {
-                    //get directory path for storing the data
-
-                    final dir = await getApplicationDocumentsDirectory();
-                    // open isar db
-                    final isar_as_db =
-                        await Isar.open([TodoIsarSchema], directory: dir.path);
-                    final todoRepo = IsarTodoRepo(isar_as_db);
-
+                    await _ensureDbIsOpen();
+                    //final db = _getDataBaseOrThrow();
                     Navigator.push(
                         context,
                         MaterialPageRoute(
