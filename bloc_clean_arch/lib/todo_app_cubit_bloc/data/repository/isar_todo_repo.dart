@@ -8,7 +8,7 @@ import 'package:bloc_clean_arch/todo_app_cubit_bloc/domain/models/todo.dart';
 import 'package:bloc_clean_arch/todo_app_cubit_bloc/domain/repoistory/todo_repo.dart';
 import 'package:isar/isar.dart';
 
-class IsarTodoRepo extends TodoRepo {
+class IsarTodoRepo implements TodoRepo {
   // database
   final Isar db;
   IsarTodoRepo(this.db);

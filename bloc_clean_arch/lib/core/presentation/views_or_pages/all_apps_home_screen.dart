@@ -5,7 +5,7 @@ import 'package:bloc_clean_arch/counter_apps/core/presentation/views/counter_app
 import 'package:bloc_clean_arch/quiz_app/presentation/home_screen.dart';
 import 'package:bloc_clean_arch/simple_calculator_app_cubit_bloc/presentation/calc_view.dart';
 import 'package:bloc_clean_arch/simple_calculator_app_cubit_bloc/presentation/calc_view_component/my_button.dart';
-import 'package:bloc_clean_arch/social_app_tik_tok_like/social_app.dart';
+import 'package:bloc_clean_arch/social_app_instagram_like/social_app.dart';
 import 'package:bloc_clean_arch/todo_apps/core/presentation/views/todo_apps_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
