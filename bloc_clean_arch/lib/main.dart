@@ -6,11 +6,11 @@ import 'package:bloc_clean_arch/counter_apps/countdown_timer/presentation/count_
 import 'package:bloc_clean_arch/counter_apps/countdown_timer/presentation/countdown_bloc_statemanagement/countdown_bloc.dart';
 import 'package:bloc_clean_arch/counter_apps/counter_app/counter_cubit_bloc/counter_page.dart';
 import 'package:bloc_clean_arch/config/firebase_options.dart';
-import 'package:bloc_clean_arch/quiz_app/domain/quiz_bloc/quiz_bloc.dart';
+import 'package:bloc_clean_arch/quiz_app/presentation/quiz_bloc/quiz_bloc.dart';
 import 'package:bloc_clean_arch/quiz_app/presentation/home_screen.dart';
 import 'package:bloc_clean_arch/quiz_app/presentation/quiz_screen_view.dart';
 import 'package:bloc_clean_arch/simple_calculator_app_cubit_bloc/presentation/calc_view.dart';
-import 'package:bloc_clean_arch/social_app_instagram_like/features/auth/presentation/themes/light_mode_theme.dart';
+import 'package:bloc_clean_arch/social_app_instagram_like/themes/light_mode_theme.dart';
 import 'package:bloc_clean_arch/social_app_instagram_like/features/auth/presentation/views/auth_page.dart';
 import 'package:bloc_clean_arch/social_app_instagram_like/features/auth/presentation/views/login_page.dart';
 import 'package:bloc_clean_arch/social_app_instagram_like/features/auth/presentation/views/register_page.dart';

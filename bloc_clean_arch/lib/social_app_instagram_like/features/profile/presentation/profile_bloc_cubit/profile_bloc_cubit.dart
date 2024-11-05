@@ -100,7 +100,7 @@ class ProfileBlocCubit extends Cubit<ProfileState> {
     try {
       await profileRepo.toogleFollow(currentUid, targetUid);
 
-      await fetchUserProfile(targetUid);
+      // await fetchUserProfile(targetUid);
     } catch (e) {
       emit(ProfileError("Erro toggling follow$e"));
     }

@@ -14,6 +14,7 @@
 import 'package:bloc_clean_arch/social_app_instagram_like/features/auth/presentation/components/my_social_button.dart';
 import 'package:bloc_clean_arch/social_app_instagram_like/features/auth/presentation/components/my_text_field_social_app.dart';
 import 'package:bloc_clean_arch/social_app_instagram_like/features/auth/presentation/cubits_bloc/auth_bloc_cubits.dart';
+import 'package:bloc_clean_arch/social_app_instagram_like/features/responsive/constraint_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -62,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ConstrainedScaffold(
         body: SafeArea(
       child: Center(
         child: Padding(

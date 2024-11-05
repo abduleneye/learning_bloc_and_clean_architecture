@@ -3,6 +3,7 @@ import 'package:bloc_clean_arch/social_app_instagram_like/features/posts/present
 import 'package:bloc_clean_arch/social_app_instagram_like/features/posts/presentation/post_component/post_tile.dart';
 import 'package:bloc_clean_arch/social_app_instagram_like/features/posts/presentation/posts_cubit_bloc/post_cubit_bloc.dart';
 import 'package:bloc_clean_arch/social_app_instagram_like/features/posts/presentation/posts_cubit_bloc/post_state.dart';
+import 'package:bloc_clean_arch/social_app_instagram_like/features/responsive/constraint_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -37,7 +38,7 @@ class _SocialHomePageState extends State<SocialHomePage> {
   //BUILD UI
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ConstrainedScaffold(
         //APP BAR
         appBar: AppBar(
           title: Text('Home Page'),

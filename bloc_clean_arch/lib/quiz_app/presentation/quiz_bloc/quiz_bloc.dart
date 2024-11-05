@@ -1,6 +1,6 @@
 import 'package:bloc_clean_arch/quiz_app/question_holder_class_similar_to_my_kotlin_quiz_app.dart';
-import 'package:bloc_clean_arch/quiz_app/domain/quiz_bloc/quiz_events.dart';
-import 'package:bloc_clean_arch/quiz_app/domain/quiz_bloc/quiz_states.dart';
+import 'package:bloc_clean_arch/quiz_app/presentation/quiz_bloc/quiz_events.dart';
+import 'package:bloc_clean_arch/quiz_app/presentation/quiz_bloc/quiz_states.dart';
 import 'package:bloc_clean_arch/quiz_app/quiz_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

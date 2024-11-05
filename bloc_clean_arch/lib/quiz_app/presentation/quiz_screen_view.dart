@@ -1,6 +1,6 @@
-import 'package:bloc_clean_arch/quiz_app/domain/quiz_bloc/quiz_bloc.dart';
-import 'package:bloc_clean_arch/quiz_app/domain/quiz_bloc/quiz_events.dart';
-import 'package:bloc_clean_arch/quiz_app/domain/quiz_bloc/quiz_states.dart';
+import 'package:bloc_clean_arch/quiz_app/presentation/quiz_bloc/quiz_bloc.dart';
+import 'package:bloc_clean_arch/quiz_app/presentation/quiz_bloc/quiz_events.dart';
+import 'package:bloc_clean_arch/quiz_app/presentation/quiz_bloc/quiz_states.dart';
 import 'package:bloc_clean_arch/quiz_app/presentation/ui_components/quiz_screen_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';

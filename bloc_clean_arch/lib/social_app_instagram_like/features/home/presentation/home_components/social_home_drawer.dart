@@ -1,6 +1,8 @@
 import 'package:bloc_clean_arch/social_app_instagram_like/features/auth/presentation/cubits_bloc/auth_bloc_cubits.dart';
 import 'package:bloc_clean_arch/social_app_instagram_like/features/home/presentation/home_components/social_home_drawer_tile.dart';
 import 'package:bloc_clean_arch/social_app_instagram_like/features/profile/presentation/views/profile_page.dart';
+import 'package:bloc_clean_arch/social_app_instagram_like/features/search/presentation/search_page.dart';
+import 'package:bloc_clean_arch/social_app_instagram_like/features/settings/presentation/settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -43,7 +45,7 @@ class MySocialDrawer extends StatelessWidget {
                 },
               ),
 
-              // search tile
+              // profile tile
               SocialDrawerTile(
                 title: 'P R O F I L E',
                 icon: Icons.person,
@@ -65,11 +67,28 @@ class MySocialDrawer extends StatelessWidget {
                 },
               ),
 
-              // settings tile
+              // search tile
               SocialDrawerTile(
                 title: 'S E A R C H',
                 icon: Icons.search,
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SearchPage()));
+                },
+              ),
+
+              // settings  tile
+              SocialDrawerTile(
+                title: 'S E T T I N G S',
+                icon: Icons.search,
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SettingsPage()));
+                },
               ),
 
               const Spacer(),

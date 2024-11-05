@@ -17,9 +17,9 @@
 //     );
 //   }
 // }
-import 'package:bloc_clean_arch/quiz_app/domain/quiz_bloc/quiz_bloc.dart';
-import 'package:bloc_clean_arch/quiz_app/domain/quiz_bloc/quiz_events.dart';
-import 'package:bloc_clean_arch/quiz_app/domain/quiz_bloc/quiz_states.dart';
+import 'package:bloc_clean_arch/quiz_app/presentation/quiz_bloc/quiz_bloc.dart';
+import 'package:bloc_clean_arch/quiz_app/presentation/quiz_bloc/quiz_events.dart';
+import 'package:bloc_clean_arch/quiz_app/presentation/quiz_bloc/quiz_states.dart';
 import 'package:bloc_clean_arch/quiz_app/presentation/quiz_mode_screen.dart';
 import 'package:bloc_clean_arch/quiz_app/presentation/offline_category_screen.dart';
 import 'package:bloc_clean_arch/quiz_app/presentation/quiz_screen_view.dart';

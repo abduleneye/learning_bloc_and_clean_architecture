@@ -6,6 +6,7 @@ import 'package:bloc_clean_arch/social_app_instagram_like/features/auth/presenta
 import 'package:bloc_clean_arch/social_app_instagram_like/features/posts/domain/post_entities.dart';
 import 'package:bloc_clean_arch/social_app_instagram_like/features/posts/presentation/posts_cubit_bloc/post_cubit_bloc.dart';
 import 'package:bloc_clean_arch/social_app_instagram_like/features/posts/presentation/posts_cubit_bloc/post_state.dart';
+import 'package:bloc_clean_arch/social_app_instagram_like/features/responsive/constraint_scaffold.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -124,7 +125,7 @@ class _UploadPostPageState extends State<UploadPostPage> {
   }
 
   Widget buildUploadPage() {
-    return Scaffold(
+    return ConstrainedScaffold(
         appBar: AppBar(
           title: const Text('Create Post'),
           foregroundColor: Theme.of(context).colorScheme.primary,

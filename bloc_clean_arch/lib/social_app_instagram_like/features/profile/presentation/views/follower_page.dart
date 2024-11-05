@@ -5,6 +5,7 @@
 */
 import 'package:bloc_clean_arch/social_app_instagram_like/features/profile/presentation/profile_bloc_cubit/profile_bloc_cubit.dart';
 import 'package:bloc_clean_arch/social_app_instagram_like/features/profile/presentation/profile_components.dart/followers_user_tile.dart';
+import 'package:bloc_clean_arch/social_app_instagram_like/features/responsive/constraint_scaffold.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -24,7 +25,7 @@ class FollowerPage extends StatelessWidget {
     // TAB CONTROLLER
     return DefaultTabController(
       length: 2,
-      child: Scaffold(
+      child: ConstrainedScaffold(
         appBar: AppBar(
           bottom: TabBar(
               dividerColor: Colors.transparent,

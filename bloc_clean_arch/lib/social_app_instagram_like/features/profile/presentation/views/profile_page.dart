@@ -10,6 +10,7 @@ import 'package:bloc_clean_arch/social_app_instagram_like/features/profile/prese
 import 'package:bloc_clean_arch/social_app_instagram_like/features/profile/presentation/profile_bloc_cubit/profile_state.dart';
 import 'package:bloc_clean_arch/social_app_instagram_like/features/profile/presentation/profile_components.dart/bio_box.dart';
 import 'package:bloc_clean_arch/social_app_instagram_like/features/profile/presentation/views/follower_page.dart';
+import 'package:bloc_clean_arch/social_app_instagram_like/features/responsive/constraint_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -97,7 +98,7 @@ class _ProfilePageState extends State<ProfilePage> {
       if (profileState is ProfileLoaded) {
         // get loaded user
         final user = profileState.profileUser;
-        return Scaffold(
+        return ConstrainedScaffold(
           //APP BAR
           appBar: AppBar(
             title: Text(
