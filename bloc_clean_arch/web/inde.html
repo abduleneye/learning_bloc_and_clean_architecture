@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Your App Name</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      /* Optional: custom loading spinner while the app is loading */
+      #loading-spinner {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="loading-spinner">
+      Loading...
+    </div>
+    
+    <!-- The Flutter app script -->
+    <script src="main.dart.js" type="application/javascript"></script>
+
+    <!-- Firebase Configuration -->
+    <script type="module">
+      // Import Firebase SDK modules (adjust versions as needed)
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+      import { getFirestore } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+      import { getAuth } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
+      import { getStorage } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-storage.js";
+
+      // Your Firebase configuration
+      const firebaseConfig = {
+        apiKey: 'AIzaSyDHyFLlODZFmzaM_MB0FVoH3ncMNYg_lH8',
+        appId: '1:799707036419:web:c539ef864d4d858a50c736',
+        messagingSenderId: '799707036419',
+        projectId: 'flutter-db45c',
+        authDomain: 'flutter-db45c.firebaseapp.com',
+        storageBucket: 'flutter-db45c.appspot.com',
+        measurementId: 'G-639RXLD4JE',
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+      const auth = getAuth(app);
+      const storage = getStorage(app);
+
+      // (Optional) Export Firebase instances for further use if needed
+      window.firebaseApp = app;
+      window.firebaseAuth = auth;
+      window.firebaseDb = db;
+      window.firebaseStorage = storage;
+    </script>
+  </body>
+</html>

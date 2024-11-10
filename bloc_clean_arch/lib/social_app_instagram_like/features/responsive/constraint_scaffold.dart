@@ -12,12 +12,16 @@ class ConstrainedScaffold extends StatelessWidget {
   final Widget body;
   final PreferredSizeWidget? appBar;
   final Widget? drawer;
-  const ConstrainedScaffold({
-    super.key,
-    required this.body,
-    this.appBar,
-    this.drawer,
-  });
+  final Widget? floatingActionButton;
+  final FloatingActionButtonLocation? floatingActionButtonLocation;
+
+  const ConstrainedScaffold(
+      {super.key,
+      required this.body,
+      this.appBar,
+      this.drawer,
+      this.floatingActionButton,
+      this.floatingActionButtonLocation});
 
   @override
   Widget build(BuildContext context) {

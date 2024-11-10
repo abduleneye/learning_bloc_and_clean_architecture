@@ -6,6 +6,7 @@ COUNTER VIEW: responsible for UI
  */
 
 import 'package:bloc_clean_arch/counter_apps/counter_app/counter_cubit_bloc/counter_cubit_bloc.dart';
+import 'package:bloc_clean_arch/social_app_instagram_like/features/responsive/constraint_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,7 +18,7 @@ class CounterView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //Scaffold
-    return Scaffold(
+    return ConstrainedScaffold(
       appBar: AppBar(title: const Text('Counter App')),
       body: BlocBuilder<CounterCubit, int>(
         builder: (context, state) {

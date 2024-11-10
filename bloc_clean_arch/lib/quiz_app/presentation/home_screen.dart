@@ -24,6 +24,7 @@ import 'package:bloc_clean_arch/quiz_app/presentation/quiz_mode_screen.dart';
 import 'package:bloc_clean_arch/quiz_app/presentation/offline_category_screen.dart';
 import 'package:bloc_clean_arch/quiz_app/presentation/quiz_screen_view.dart';
 import 'package:bloc_clean_arch/simple_calculator_app_cubit_bloc/presentation/calc_view_component/my_button.dart';
+import 'package:bloc_clean_arch/social_app_instagram_like/features/responsive/constraint_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -49,7 +50,7 @@ class _QuizHomeScreenState extends State<QuizHomeScreen> {
           } else if (state.currentScreen == 'quiz_screen') {
             return const MyQuizScreen();
           } else {
-            return const Scaffold(
+            return const ConstrainedScaffold(
               body: Center(child: CircularProgressIndicator()),
             );
           }

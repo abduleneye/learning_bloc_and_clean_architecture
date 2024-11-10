@@ -9,9 +9,17 @@ import 'package:isar/isar.dart';
 // to generate isar todo object, run: dart run build_runner build
 part 'isar_todo.g.dart';
 
+class IdGen {
+  static Id _nextId = 1;
+
+  static generateId() {
+    return _nextId++;
+  }
+}
+
 @collection
 class TodoIsar {
-  Id id = Isar.autoIncrement;
+  Id id = IdGen._nextId;
   late String text;
   late bool isCompleted;
 

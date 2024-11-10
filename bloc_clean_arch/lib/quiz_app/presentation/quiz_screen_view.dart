@@ -2,6 +2,7 @@ import 'package:bloc_clean_arch/quiz_app/presentation/quiz_bloc/quiz_bloc.dart';
 import 'package:bloc_clean_arch/quiz_app/presentation/quiz_bloc/quiz_events.dart';
 import 'package:bloc_clean_arch/quiz_app/presentation/quiz_bloc/quiz_states.dart';
 import 'package:bloc_clean_arch/quiz_app/presentation/ui_components/quiz_screen_card.dart';
+import 'package:bloc_clean_arch/social_app_instagram_like/features/responsive/constraint_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -55,7 +56,7 @@ class _MyQuizScreenState extends State<MyQuizScreen> {
           );
         } else {
           return WillPopScope(
-            child: Scaffold(
+            child: ConstrainedScaffold(
                 appBar: AppBar(
                   title: const Text('QUIZ SCREEN'),
                 ),

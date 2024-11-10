@@ -5,6 +5,7 @@ import 'package:bloc_clean_arch/api_apps/movie_api_call/domain/movie_entity.dart
 import 'package:bloc_clean_arch/api_apps/movie_api_call/presentation/movies_api_bloc/movies_bloc.dart';
 import 'package:bloc_clean_arch/api_apps/movie_api_call/presentation/movies_api_bloc/movies_event.dart';
 import 'package:bloc_clean_arch/api_apps/movie_api_call/presentation/movies_api_bloc/movies_state.dart';
+import 'package:bloc_clean_arch/social_app_instagram_like/features/responsive/constraint_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -35,7 +36,7 @@ class _MovieScreenState extends State<MovieScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ConstrainedScaffold(
         appBar: AppBar(
           title: const Text('Fetching Data'),
           actions: [

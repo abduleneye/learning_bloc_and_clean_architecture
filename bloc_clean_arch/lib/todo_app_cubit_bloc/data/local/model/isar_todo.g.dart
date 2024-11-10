@@ -16,8 +16,6 @@ extension GetTodoIsarCollection on Isar {
 const TodoIsarSchema = CollectionSchema(
   name: r'TodoIsar',
   id: -495579864114062336,
-  //  id: -495579864114062347,
-
   properties: {
     r'isCompleted': PropertySchema(
       id: 0,

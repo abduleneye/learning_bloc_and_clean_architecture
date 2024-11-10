@@ -1,6 +1,7 @@
 import 'package:bloc_clean_arch/simple_calculator_app_cubit_bloc/presentation/calc_view_component/my_button.dart';
 import 'package:bloc_clean_arch/simple_calculator_app_cubit_bloc/presentation/calc_view_component/my_textfield.dart';
 import 'package:bloc_clean_arch/simple_calculator_app_cubit_bloc/presentation/calculator_cubit_bloc.dart';
+import 'package:bloc_clean_arch/social_app_instagram_like/features/responsive/constraint_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -43,7 +44,7 @@ class _MySimpleCalcViewState extends State<MySimpleCalcView> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => CalculatorCubitBloc(0),
-      child: Scaffold(
+      child: ConstrainedScaffold(
           appBar: AppBar(
             title: const Text('Simple Calc'),
           ),
