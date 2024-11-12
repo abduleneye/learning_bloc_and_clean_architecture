@@ -20,9 +20,9 @@ class AnswerCheck extends QuizEvents {
   const AnswerCheck({required this.selectedAnswer});
 }
 
-class NavigationEvent extends QuizEvents {
-  final String screenRoute;
-  final String? questionCategory;
-  const NavigationEvent(
-      {required this.screenRoute, required this.questionCategory});
-}
+// class NavigationEvent extends QuizEvents {
+//   final String screenRoute;
+//   final String? questionCategory;
+//   const NavigationEvent(
+//       {required this.screenRoute, required this.questionCategory});
+// }
