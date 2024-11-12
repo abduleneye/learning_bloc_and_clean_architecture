@@ -11,8 +11,8 @@ class PreviousQuestion extends QuizEvents {
 }
 
 class LoadQuestion extends QuizEvents {
-  final String questionCategogry;
-  const LoadQuestion({required this.questionCategogry});
+  final String questionCategory;
+  const LoadQuestion({required this.questionCategory});
 }
 
 class AnswerCheck extends QuizEvents {

@@ -1,4 +1,4 @@
-import 'package:bloc_clean_arch/quiz_app/quiz_model.dart';
+import 'package:bloc_clean_arch/quiz_app/domain/quiz_model.dart';
 
 class Question {
   List<QuizModel> GetQuestions({required String subjChoosen}) {

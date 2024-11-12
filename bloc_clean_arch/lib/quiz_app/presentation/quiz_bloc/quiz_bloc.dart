@@ -1,26 +1,27 @@
+import 'package:bloc_clean_arch/quiz_app/domain/quiz_repo.dart';
 import 'package:bloc_clean_arch/quiz_app/question_holder_class_similar_to_my_kotlin_quiz_app.dart';
 import 'package:bloc_clean_arch/quiz_app/presentation/quiz_bloc/quiz_events.dart';
 import 'package:bloc_clean_arch/quiz_app/presentation/quiz_bloc/quiz_states.dart';
-import 'package:bloc_clean_arch/quiz_app/quiz_model.dart';
+import 'package:bloc_clean_arch/quiz_app/domain/quiz_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class QuizBloc extends Bloc<QuizEvents, QuizStates> {
-  QuizBloc()
+  final QuizRepo quizRepo;
+  QuizBloc({required this.quizRepo})
       : super(const QuizStates(
-          currentQ: 0,
-          questions: [],
-          currentScreen: 'mode_screen',
-          isOptionA: '',
-          isOptionB: '',
-          isOptionC: '',
-          isOptionD: '',
-          correctAnswer: '',
-          correctAnswerVisibility: false,
-        )) {
-    List<QuizModel> questions =
-        Question().GetQuestions(subjChoosen: 'chemistry');
+            currentQ: 0,
+            questions: [],
+            isOptionA: '',
+            isOptionB: '',
+            isOptionC: '',
+            isOptionD: '',
+            currentScreen: '',
+            correctAnswerVisibility: false,
+            correctAnswer: '')) {
+    // List<QuizModel> questions =
+    Question().GetQuestions(subjChoosen: 'chemistry');
     // emit(QuizStates(
     //     currentQ: state.currentQ,
     //     questions: questions,
@@ -32,6 +33,21 @@ class QuizBloc extends Bloc<QuizEvents, QuizStates> {
     //       questions: questions,
     //       currentScreen: state.currentScreen));
     // });
+
+    on<LoadQuestion>((event, emit) async {
+      final loadedQuestions =
+          await quizRepo.fetchQuizQuestions(category: event.questionCategory);
+      emit(QuizStates(
+          currentQ: state.currentQ,
+          questions: loadedQuestions,
+          isOptionA: state.isOptionA,
+          isOptionB: state.isOptionB,
+          isOptionC: state.isOptionC,
+          isOptionD: state.isOptionD,
+          currentScreen: state.currentScreen,
+          correctAnswerVisibility: state.correctAnswerVisibility,
+          correctAnswer: state.correctAnswer));
+    });
 
     on<NextQuestion>((event, emit) {
       if (state.currentQ < state.questions.length - 1) {
@@ -85,10 +101,10 @@ class QuizBloc extends Bloc<QuizEvents, QuizStates> {
     on<NavigationEvent>(
       (event, emit) {
         if (event.questionCategory == 'physics') {
-          questions = Question().GetQuestions(subjChoosen: 'physics');
+          // questions = Question().GetQuestions(subjChoosen: 'physics');
           emit(QuizStates(
               currentQ: 0,
-              questions: questions,
+              questions: state.questions,
               currentScreen: event.screenRoute,
               isOptionA: '',
               isOptionB: '',
@@ -97,10 +113,10 @@ class QuizBloc extends Bloc<QuizEvents, QuizStates> {
               correctAnswer: '',
               correctAnswerVisibility: false));
         } else if (event.questionCategory == 'chemistry') {
-          questions = Question().GetQuestions(subjChoosen: 'chemistry');
+          //  questions = Question().GetQuestions(subjChoosen: 'chemistry');
           emit(QuizStates(
               currentQ: 0,
-              questions: questions,
+              questions: state.questions,
               currentScreen: event.screenRoute,
               isOptionA: '',
               isOptionB: '',

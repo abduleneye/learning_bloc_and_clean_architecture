@@ -7,7 +7,6 @@ import 'package:bloc_clean_arch/counter_apps/countdown_timer/presentation/countd
 import 'package:bloc_clean_arch/counter_apps/counter_app/counter_cubit_bloc/counter_page.dart';
 import 'package:bloc_clean_arch/config/firebase_options.dart';
 import 'package:bloc_clean_arch/quiz_app/presentation/quiz_bloc/quiz_bloc.dart';
-import 'package:bloc_clean_arch/quiz_app/presentation/home_screen.dart';
 import 'package:bloc_clean_arch/quiz_app/presentation/quiz_screen_view.dart';
 import 'package:bloc_clean_arch/simple_calculator_app_cubit_bloc/presentation/calc_view.dart';
 import 'package:bloc_clean_arch/social_app_instagram_like/themes/light_mode_theme.dart';

@@ -1,4 +1,4 @@
-import 'package:bloc_clean_arch/quiz_app/quiz_model.dart';
+import 'package:bloc_clean_arch/quiz_app/domain/quiz_model.dart';
 
 class QuizStates {
   final int currentQ;
@@ -10,6 +10,7 @@ class QuizStates {
   final String isOptionD;
   final String? correctAnswer;
   final bool correctAnswerVisibility;
+
   // final bool isOptionContainerEnabled;
   // final isPreviousButtonEnabled;
   // final isNextButtonEnabled;
@@ -28,4 +29,60 @@ class QuizStates {
     // required this.isNextButtonEnabled,
     // required this.isPreviousButtonEnabled
   });
+}
+
+class QuizLoading extends QuizStates {
+  QuizLoading()
+      : super(
+            currentQ: 0,
+            questions: [],
+            isOptionA: '',
+            isOptionB: '',
+            isOptionC: '',
+            isOptionD: '',
+            currentScreen: '',
+            correctAnswer: '',
+            correctAnswerVisibility: false);
+}
+
+class QuizLoaded extends QuizStates {
+  QuizLoaded()
+      : super(
+            currentQ: 0,
+            questions: [],
+            isOptionA: '',
+            isOptionB: '',
+            isOptionC: '',
+            isOptionD: '',
+            currentScreen: '',
+            correctAnswer: '',
+            correctAnswerVisibility: false);
+}
+
+class QuizError extends QuizStates {
+  QuizError()
+      : super(
+            currentQ: 0,
+            questions: [],
+            isOptionA: '',
+            isOptionB: '',
+            isOptionC: '',
+            isOptionD: '',
+            currentScreen: '',
+            correctAnswer: '',
+            correctAnswerVisibility: false);
+}
+
+class QuizEnded extends QuizStates {
+  QuizEnded()
+      : super(
+            currentQ: 0,
+            questions: [],
+            isOptionA: '',
+            isOptionB: '',
+            isOptionC: '',
+            isOptionD: '',
+            currentScreen: '',
+            correctAnswer: '',
+            correctAnswerVisibility: false);
 }
