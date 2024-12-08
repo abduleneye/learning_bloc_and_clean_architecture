@@ -12,8 +12,15 @@ class QuizModel {
   factory QuizModel.fromJson(Map<String, dynamic> json) {
     return QuizModel(
         question: json['question'],
-        allOptions: json['incorrectOtions'],
+        allOptions: List<String>.from(json['allOptions']),
         correctOption: json['correctOption']);
+  }
+
+  factory QuizModel.fromFireStoreMap(Map<String, dynamic> map) {
+    return QuizModel(
+        question: map['question'],
+        allOptions: List<String>.from(map['allOptions']),
+        correctOption: map['correctOption']);
   }
 }
 

@@ -49,7 +49,7 @@ class Post {
     };
   }
 
-  //conver json post file back to post object to use in our app
+  //convert json post file back to post object to use in our app
   factory Post.fromJson(Map<String, dynamic> json) {
     // prepare comments
     final List<Comment> comments = (json['comments'] as List<dynamic>?)

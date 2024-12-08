@@ -1,0 +1,112 @@
+[
+  {
+    "question": "What is the SI unit of force?",
+    "allOptions": ["Newton", "Pascal", "Joule", "Watt"],
+    "correctOption": "Newton"
+  },
+  {
+    "question": "What is the acceleration due to gravity on Earth?",
+    "allOptions": ["9.8 m/s²", "10 m/s²", "8.9 m/s²", "9.1 m/s²"],
+    "correctOption": "9.8 m/s²"
+  },
+  {
+    "question": "Who formulated the laws of motion?",
+    "allOptions": ["Albert Einstein", "Isaac Newton", "Galileo Galilei", "Nikola Tesla"],
+    "correctOption": "Isaac Newton"
+  },
+  {
+    "question": "What type of lens is used to correct myopia?",
+    "allOptions": ["Convex lens", "Concave lens", "Cylindrical lens", "Bifocal lens"],
+    "correctOption": "Concave lens"
+  },
+  {
+    "question": "What is the speed of light in a vacuum?",
+    "allOptions": ["3 × 10^8 m/s", "3 × 10^6 m/s", "3 × 10^7 m/s", "3 × 10^5 m/s"],
+    "correctOption": "3 × 10^8 m/s"
+  },
+  {
+    "question": "What is the unit of electrical resistance?",
+    "allOptions": ["Ohm", "Volt", "Ampere", "Watt"],
+    "correctOption": "Ohm"
+  },
+  {
+    "question": "Which planet has the strongest gravitational force?",
+    "allOptions": ["Earth", "Jupiter", "Saturn", "Mars"],
+    "correctOption": "Jupiter"
+  },
+  {
+    "question": "What is the formula for kinetic energy?",
+    "allOptions": ["1/2 mv²", "mv", "mg", "1/2 mv"],
+    "correctOption": "1/2 mv²"
+  },
+  {
+    "question": "Which law states that energy cannot be created or destroyed?",
+    "allOptions": ["Law of Conservation of Energy", "Newton's Third Law", "Ohm's Law", "Pascal's Law"],
+    "correctOption": "Law of Conservation of Energy"
+  },
+  {
+    "question": "What type of wave is light?",
+    "allOptions": ["Longitudinal", "Transverse", "Mechanical", "Electrochemical"],
+    "correctOption": "Transverse"
+  },
+  {
+    "question": "What is the name of the device used to measure electric current?",
+    "allOptions": ["Voltmeter", "Ammeter", "Galvanometer", "Multimeter"],
+    "correctOption": "Ammeter"
+  },
+  {
+    "question": "What phenomenon explains the bending of light as it passes through a medium?",
+    "allOptions": ["Reflection", "Refraction", "Diffraction", "Interference"],
+    "correctOption": "Refraction"
+  },
+  {
+    "question": "What is the charge of an electron?",
+    "allOptions": ["-1.6 × 10^-19 C", "+1.6 × 10^-19 C", "0 C", "-1.6 × 10^-9 C"],
+    "correctOption": "-1.6 × 10^-19 C"
+  },
+  {
+    "question": "Which of these is a scalar quantity?",
+    "allOptions": ["Velocity", "Force", "Distance", "Acceleration"],
+    "correctOption": "Distance"
+  },
+  {
+    "question": "What is the first law of thermodynamics?",
+    "allOptions": [
+      "Energy cannot be created or destroyed",
+      "Entropy always increases",
+      "Action equals reaction",
+      "Work is proportional to force"
+    ],
+    "correctOption": "Energy cannot be created or destroyed"
+  },
+  {
+    "question": "Which particle is found in the nucleus of an atom?",
+    "allOptions": ["Proton", "Electron", "Photon", "Neutron"],
+    "correctOption": "Proton"
+  },
+  {
+    "question": "What is the principle behind hydraulic machines?",
+    "allOptions": ["Bernoulli's Principle", "Pascal's Law", "Archimedes' Principle", "Newton's Law"],
+    "correctOption": "Pascal's Law"
+  },
+  {
+    "question": "What is the standard unit of power?",
+    "allOptions": ["Watt", "Joule", "Newton", "Ampere"],
+    "correctOption": "Watt"
+  },
+  {
+    "question": "What is the main function of a transformer?",
+    "allOptions": [
+      "Increase or decrease voltage",
+      "Convert AC to DC",
+      "Measure resistance",
+      "Store electrical energy"
+    ],
+    "correctOption": "Increase or decrease voltage"
+  },
+  {
+    "question": "What is the device used to measure atmospheric pressure?",
+    "allOptions": ["Barometer", "Thermometer", "Hygrometer", "Anemometer"],
+    "correctOption": "Barometer"
+  }
+]

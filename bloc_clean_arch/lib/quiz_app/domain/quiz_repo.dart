@@ -5,4 +5,7 @@ abstract class QuizRepo {
   Future<void> checkAnswer();
   Future<void> nextQuestion();
   Future<void> previousQuestion();
+  Future<List<QuizModel>> fetchPhysicsQuestionFromFireStore();
+  Future<void> uploadPhysicsQuestionsToFireStore();
+  Future<void> loadQuestionsFromJsonLocally();
 }

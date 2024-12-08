@@ -1,7 +1,17 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:bloc_clean_arch/quiz_app/domain/quiz_model.dart';
 import 'package:bloc_clean_arch/quiz_app/domain/quiz_repo.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart';
 
 class QuizRepoImplementation extends QuizRepo {
+  // Firestore ref
+  final CollectionReference questionCollection =
+  FirebaseFirestore.instance.collection("quiz_questions");
+
+ // final CollectionReference physicsQuestionCollectionRef = questionCollection.doc("");
   @override
   Future<void> checkAnswer() {
     // TODO: implement checkAnswer
@@ -76,4 +86,73 @@ class QuizRepoImplementation extends QuizRepo {
     // TODO: implement previousQuestion
     throw UnimplementedError();
   }
+
+  @override
+  Future<List<QuizModel>> fetchPhysicsQuestionFromFireStore() async{
+    print("Loading Physics questions from  fire store");
+    try{
+      //Physics question fire store document ref
+      DocumentSnapshot physicsQuestionSnapshot = await questionCollection.doc("physics_questions").get();
+      if(physicsQuestionSnapshot.exists){
+        //Get the question list from the doc and map it to a list of QuizModel
+        List<dynamic> physicsQuestionData = physicsQuestionSnapshot['questions'];
+        List<QuizModel> physicsQuestionInModelForm = physicsQuestionData.map((data) => QuizModel.fromFireStoreMap(data)).toList();
+        print("Physics questions loaded from  fire store successfully");
+        print(physicsQuestionInModelForm[0].question);
+        print(physicsQuestionInModelForm[0].question);
+        print(physicsQuestionInModelForm[0].allOptions);
+        print(physicsQuestionInModelForm[0].correctOption);
+
+
+        return physicsQuestionInModelForm;
+      }else{
+        return [];
+      }
+
+    }catch(e){
+      print("An error occureed fetching question from FB ${e}");
+      return [];
+
+    }
+
+  }
+
+  @override
+  Future<void> uploadPhysicsQuestionsToFireStore() async {
+    // Uploading questions
+    print("UploadingPhysicsQuestionsToFireStore...");
+
+    try{
+     String jsonData = await rootBundle.loadString('assets/questions.json');
+     List<dynamic> physicsQuestionList = json.decode(jsonData);
+
+     //upload question list as a single document
+     print("UploadingPhysicsQuestions...");
+     await questionCollection.doc('physics_questions').set({
+       'questions': physicsQuestionList
+
+     });
+     print("Questions added successfully");
+
+   }catch(e){
+     print("Error uploading questions ${e}");
+
+   }
+
+
+  }
+
+  @override
+  Future<void> loadQuestionsFromJsonLocally() async {
+    try{
+      String jsonData = await rootBundle.loadString('assets/questions.json');
+      var parsedData = json.decode(jsonData);
+      print(parsedData);
+    }catch(e){
+      print("An error occured loading questions${e}");
+    }
+
+  }
+
+
 }

@@ -14,15 +14,20 @@ class QuizBloc extends Bloc<QuizEvents, QuizStates> {
       : super( QuizInitial()) {
 
     on<LoadQuestion>((event, emit) async {
+      quizRepo.uploadPhysicsQuestionsToFireStore();
+      quizRepo.loadQuestionsFromJsonLocally();
       emit(QuizLoading());
       try{
         final loadedQuestions =
         await quizRepo.fetchQuizQuestions(category: event.questionCategory);
 
+        final loadedPhysicsQuestionFromFireStore = await quizRepo.fetchPhysicsQuestionFromFireStore();
+
+
 
         emit(QuizLoaded(
             currentQ: 0,
-            questions: loadedQuestions,
+            questions: loadedPhysicsQuestionFromFireStore,
             // shuffledOptions: state.questions[state.currentQ].allOptions,
             isOptionA: "",
             isOptionB: "",
@@ -39,6 +44,7 @@ class QuizBloc extends Bloc<QuizEvents, QuizStates> {
 
 
     on<NextQuestion>((event, emit){
+      quizRepo.fetchPhysicsQuestionFromFireStore();
       final currentState = state;
       if(currentState is QuizLoaded){
         if (currentState.currentQ < currentState.questions.length - 1) {
