@@ -18,6 +18,12 @@ class MyQuizScreen extends StatefulWidget {
 class _MyQuizScreenState extends State<MyQuizScreen> {
   //List<QuizModel> questions =
   int currentQuestion = 0;
+  List<String> shuffler({required List<String>  options }){
+    List<String> shuffledOptions = options;
+    shuffledOptions.shuffle();
+    print(shuffledOptions);
+    return shuffledOptions;
+  }
   @override
   void initState() {
     super.initState();
@@ -53,127 +59,124 @@ class _MyQuizScreenState extends State<MyQuizScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // context
-    //     .read<QuizBloc>()
-    //     .add(const LoadQuestion(questionCategogry: 'chemistry'));
     return BlocBuilder<QuizBloc, QuizStates>(
       builder: (context, state) {
-        if (state.questions.isEmpty) {
-          return const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
-          );
-        } else {
-          return ConstrainedScaffold(
-              appBar: AppBar(
-                title: const Text('QUIZ SCREEN'),
-              ),
-              body: Center(
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      QuizCard(
-                          containerColorState: '',
-                          containerHeight: 100,
-                          containerWidth:
-                              MediaQuery.of(context).size.width / 1.18,
-                          containerInnerPadding: 25,
-                          questionOrOption:
-                              state.questions[state.currentQ].question),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      QuizCard(
-                          containerColorState: state.isOptionA,
+        if(state is QuizLoaded){
+          if (state.questions.isEmpty) {
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            );
+          } else {
+            return ConstrainedScaffold(
+                appBar: AppBar(
+                  title: const Text('QUIZ SCREEN'),
+                ),
+                body: Center(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        QuizCard(
+                            containerColorState: '',
+                            containerHeight: 100,
+                            containerWidth:
+                            MediaQuery.of(context).size.width / 1.18,
+                            containerInnerPadding: 25,
+                            questionOrOption:
+                            state.questions[state.currentQ].question),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        QuizCard(
+                            containerColorState: state.isOptionA,
+                            onTap: () {
+                              context.read<QuizBloc>().add(AnswerCheck(
+                                  selectedAnswer: state.questions[state.currentQ].allOptions[0]));
+                            },
+                            questionOrOption: '(a) ${state.questions[state.currentQ].allOptions[0]}',
+                            containerHeight: 50,
+                            containerWidth: 250,
+                            containerInnerPadding: 10),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        QuizCard(
+                          containerColorState: state.isOptionB,
                           onTap: () {
                             context.read<QuizBloc>().add(AnswerCheck(
-                                selectedAnswer: state
-                                    .questions[state.currentQ].optionA['a']));
+                                selectedAnswer: state.questions[state.currentQ].allOptions[1]));
                           },
-                          questionOrOption:
-                              state.questions[state.currentQ].optionA['a']!,
+                          questionOrOption: '(b) ${state.questions[state.currentQ].allOptions[1]}',
                           containerHeight: 50,
                           containerWidth: 250,
-                          containerInnerPadding: 10),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      QuizCard(
-                        containerColorState: state.isOptionB,
-                        onTap: () {
-                          context.read<QuizBloc>().add(AnswerCheck(
-                              selectedAnswer: state
-                                  .questions[state.currentQ].optionB['b']));
-                        },
-                        questionOrOption:
-                            state.questions[state.currentQ].optionB['b']!,
-                        containerHeight: 50,
-                        containerWidth: 250,
-                        containerInnerPadding: 10,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      QuizCard(
-                        containerColorState: state.isOptionC,
-                        onTap: () {
-                          context.read<QuizBloc>().add(AnswerCheck(
-                              selectedAnswer: state
-                                  .questions[state.currentQ].optionC['c']));
-                        },
-                        questionOrOption:
-                            state.questions[state.currentQ].optionC['c']!,
-                        containerHeight: 50,
-                        containerWidth: 250,
-                        containerInnerPadding: 10,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      QuizCard(
-                        containerColorState: state.isOptionD,
-                        onTap: () {
-                          context.read<QuizBloc>().add(AnswerCheck(
-                              selectedAnswer: state
-                                  .questions[state.currentQ].optionD['d']));
-                        },
-                        questionOrOption:
-                            state.questions[state.currentQ].optionD['d']!,
-                        containerHeight: 50,
-                        containerWidth: 250,
-                        containerInnerPadding: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          TextButton(
-                            onPressed: () {
-                              // prev();
-                              context.read<QuizBloc>().add(PreviousQuestion());
-                            },
-                            child: const Text('Prev'),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              // next();
-                              context.read<QuizBloc>().add(NextQuestion());
-                            },
-                            child: const Text('Next'),
-                          )
-                        ],
-                      ),
-                      Visibility(
-                        visible: state.correctAnswerVisibility,
-                        child: Text(
-                          'The correct answer is: ${state.correctAnswer.toString()}',
-                          style: const TextStyle(color: Colors.green),
+                          containerInnerPadding: 10,
                         ),
-                      )
-                    ],
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        QuizCard(
+                          containerColorState: state.isOptionC,
+                          onTap: () {
+                            context.read<QuizBloc>().add(AnswerCheck(
+                                selectedAnswer: state.questions[state.currentQ].allOptions[2]));
+                          },
+                          questionOrOption: '(c) ${state.questions[state.currentQ].allOptions[2]}',
+                          containerHeight: 50,
+                          containerWidth: 250,
+                          containerInnerPadding: 10,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        QuizCard(
+                          containerColorState: state.isOptionD,
+                          onTap: () {
+                            context.read<QuizBloc>().add(AnswerCheck(
+                                selectedAnswer: state.questions[state.currentQ].allOptions[3]));
+                          },
+                          questionOrOption: '(d) ${state.questions[state.currentQ].allOptions[3]}',
+                          containerHeight: 50,
+                          containerWidth: 250,
+                          containerInnerPadding: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                                // prev();
+                                context.read<QuizBloc>().add(PreviousQuestion());
+                              },
+                              child: const Text('Prev'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                // next();
+                                context.read<QuizBloc>().add(NextQuestion());
+                              },
+                              child: const Text('Next'),
+                            )
+                          ],
+                        ),
+                        Visibility(
+                          visible: state.correctAnswerVisibility,
+                          child: Text(
+                            'The correct answer is: ${state.correctAnswer.toString()}',
+                            style: const TextStyle(color: Colors.green),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              ));
+                ));
+          }
+
         }
+        return const Scaffold(
+          body: Center(child: CircularProgressIndicator())
+
+        );
+
       },
     );
   }

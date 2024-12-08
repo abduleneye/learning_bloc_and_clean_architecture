@@ -7,250 +7,181 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+
 class QuizBloc extends Bloc<QuizEvents, QuizStates> {
   final QuizRepo quizRepo;
   QuizBloc({required this.quizRepo})
-      : super(const QuizStates(
+      : super( QuizInitial()) {
+
+    on<LoadQuestion>((event, emit) async {
+      emit(QuizLoading());
+      try{
+        final loadedQuestions =
+        await quizRepo.fetchQuizQuestions(category: event.questionCategory);
+
+
+        emit(QuizLoaded(
             currentQ: 0,
-            questions: [],
+            questions: loadedQuestions,
+            // shuffledOptions: state.questions[state.currentQ].allOptions,
+            isOptionA: "",
+            isOptionB: "",
+            isOptionC: "",
+            isOptionD: "",
+            correctAnswerVisibility: false,
+            correctAnswer: ""));
+
+      }catch(e){
+        emit(QuizError());
+
+      }
+      });
+
+
+    on<NextQuestion>((event, emit){
+      final currentState = state;
+      if(currentState is QuizLoaded){
+        if (currentState.currentQ < currentState.questions.length - 1) {
+          emit(currentState.copyWith(
+            currentQ: currentState.currentQ + 1,
+            questions: currentState.questions,
+            correctAnswerVisibility: false,
             isOptionA: '',
             isOptionB: '',
             isOptionC: '',
             isOptionD: '',
-            currentScreen: '',
-            correctAnswerVisibility: false,
-            correctAnswer: '')) {
-    // List<QuizModel> questions =
-    Question().GetQuestions(subjChoosen: 'chemistry');
-    // emit(QuizStates(
-    //     currentQ: state.currentQ,
-    //     questions: questions,
-    //     currentScreen: state.currentScreen));
+          ));
+        } else {
+          Fluttertoast.showToast(
+              msg: 'end of questions',
+              //  toastLength: Toast.LENGTH_LONG,
+              // gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0);
+        }
 
-    // on<LoadQuestion>((event, emit) {
-    //   emit(QuizStates(
-    //       currentQ: state.currentQ,
-    //       questions: questions,
-    //       currentScreen: state.currentScreen));
-    // });
-
-    on<LoadQuestion>((event, emit) async {
-      final loadedQuestions =
-          await quizRepo.fetchQuizQuestions(category: event.questionCategory);
-      emit(QuizStates(
-          currentQ: state.currentQ,
-          questions: loadedQuestions,
-          isOptionA: state.isOptionA,
-          isOptionB: state.isOptionB,
-          isOptionC: state.isOptionC,
-          isOptionD: state.isOptionD,
-          currentScreen: state.currentScreen,
-          correctAnswerVisibility: state.correctAnswerVisibility,
-          correctAnswer: state.correctAnswer));
-    });
-
-    on<NextQuestion>((event, emit) {
-      if (state.currentQ < state.questions.length - 1) {
-        emit(QuizStates(
-          currentQ: state.currentQ + 1,
-          questions: state.questions,
-          currentScreen: state.currentScreen,
-          isOptionA: '',
-          isOptionB: '',
-          isOptionC: '',
-          isOptionD: '',
-          correctAnswer: '',
-          correctAnswerVisibility: false,
-        ));
-      } else {
-        Fluttertoast.showToast(
-            msg: 'end of questions',
-            //  toastLength: Toast.LENGTH_LONG,
-            // gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 16.0);
       }
+
     });
 
     on<PreviousQuestion>((event, emit) {
-      if (state.currentQ < state.questions.length && state.currentQ != 0) {
-        emit(QuizStates(
-            currentQ: state.currentQ - 1,
-            questions: state.questions,
-            currentScreen: state.currentScreen,
-            isOptionA: '',
-            isOptionB: '',
-            isOptionC: '',
-            isOptionD: '',
-            correctAnswer: '',
-            correctAnswerVisibility: false));
-      } else {
-        Fluttertoast.showToast(
-            msg: 'end of questions',
-            //  toastLength: Toast.LENGTH_LONG,
-            // gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 16.0);
+      final currentState = state;
+      if(currentState is QuizLoaded){
+    if (currentState.currentQ < currentState.questions.length && currentState.currentQ != 0) {
+    emit(currentState.copyWith(
+        currentQ: currentState.currentQ - 1,
+        isOptionA: '',
+        isOptionB: '',
+        isOptionC: '',
+        isOptionD: '',
+        correctAnswerVisibility: false));
+    } else {
+      //emit(QuizEnded());
+      Fluttertoast.showToast(
+          msg: 'end of questions',
+          //  toastLength: Toast.LENGTH_LONG,
+          // gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0);
+    }
       }
+
     });
 
-    // on<NavigationEvent>(
-    //   (event, emit) {
-    //     if (event.questionCategory == 'physics') {
-    //       // questions = Question().GetQuestions(subjChoosen: 'physics');
-    //       emit(QuizStates(
-    //           currentQ: 0,
-    //           questions: state.questions,
-    //           currentScreen: event.screenRoute,
-    //           isOptionA: '',
-    //           isOptionB: '',
-    //           isOptionC: '',
-    //           isOptionD: '',
-    //           correctAnswer: '',
-    //           correctAnswerVisibility: false));
-    //     } else if (event.questionCategory == 'chemistry') {
-    //       //  questions = Question().GetQuestions(subjChoosen: 'chemistry');
-    //       emit(QuizStates(
-    //           currentQ: 0,
-    //           questions: state.questions,
-    //           currentScreen: event.screenRoute,
-    //           isOptionA: '',
-    //           isOptionB: '',
-    //           isOptionC: '',
-    //           isOptionD: '',
-    //           correctAnswer: '',
-    //           correctAnswerVisibility: false));
-    //     } else {
-    //       emit(QuizStates(
-    //           currentQ: 0,
-    //           questions: [],
-    //           currentScreen: event.screenRoute,
-    //           isOptionA: '',
-    //           isOptionB: '',
-    //           isOptionC: '',
-    //           isOptionD: '',
-    //           correctAnswer: '',
-    //           correctAnswerVisibility: false));
-    //     }
-    //   },
-    // );
 
     on<AnswerCheck>((event, emit) {
-      if (event.selectedAnswer ==
-          state.questions[state.currentQ].optionA['a']) {
-        if (event.selectedAnswer ==
-            state.questions[state.currentQ].correctAns['correctAns']) {
-          emit(QuizStates(
-              currentQ: state.currentQ,
-              questions: state.questions,
-              currentScreen: state.currentScreen,
-              isOptionA: 'iscorrect',
+      final currentState = state;
+      if(currentState is QuizLoaded){
+
+        if (event.selectedAnswer == currentState.questions[currentState.currentQ].allOptions[0]) {
+          if (event.selectedAnswer ==
+              currentState.questions[currentState.currentQ].correctOption) {
+            emit(currentState.copyWith(
+                isOptionA: 'iscorrect',
+                isOptionB: '',
+                isOptionC: '',
+                isOptionD: '',
+                correctAnswerVisibility: false
+            ));
+          } else {
+            emit(currentState.copyWith(
+                isOptionA: 'iswrong',
+                isOptionB: '',
+                isOptionC: '',
+                isOptionD: '',
+                correctAnswer: currentState.questions[currentState.currentQ].correctOption,
+                correctAnswerVisibility: true));
+          }
+        } else if (event.selectedAnswer == currentState.questions[currentState.currentQ].allOptions[1]) {
+          if (event.selectedAnswer ==
+              currentState.questions[currentState.currentQ].correctOption) {
+            emit(currentState.copyWith(
+                isOptionA: '',
+                isOptionB: 'iscorrect',
+                isOptionC: '',
+                isOptionD: '',
+                correctAnswerVisibility: false));
+          } else {
+            emit(currentState.copyWith(
+                isOptionA: '',
+                isOptionB: 'iswrong',
+                isOptionC: '',
+                isOptionD: '',
+                correctAnswer: currentState.questions[currentState.currentQ].correctOption,
+                correctAnswerVisibility: true));
+          }
+        } else if (event.selectedAnswer == currentState.questions[currentState.currentQ].allOptions[2]) {
+          if (event.selectedAnswer ==
+              currentState.questions[currentState.currentQ].correctOption) {
+            emit(currentState.copyWith(
+                isOptionA: '',
+                isOptionB: '',
+                isOptionC: 'iscorrect',
+                isOptionD: '',
+                correctAnswerVisibility: false));
+          } else {
+            emit(currentState.copyWith(
+                isOptionA: '',
+                isOptionB: '',
+                isOptionC: 'iswrong',
+                isOptionD: '',
+                correctAnswer: currentState.questions[currentState.currentQ].correctOption,
+                correctAnswerVisibility: true));
+          }
+        } else if (event.selectedAnswer ==
+            currentState.questions[currentState.currentQ].allOptions[3]) {
+          if (event.selectedAnswer ==
+              currentState.questions[currentState.currentQ].correctOption) {
+            emit(currentState.copyWith(
+              isOptionA: '',
               isOptionB: '',
               isOptionC: '',
-              isOptionD: '',
-              correctAnswer: '',
-              correctAnswerVisibility: false));
-        } else {
-          emit(QuizStates(
-              currentQ: state.currentQ,
-              questions: state.questions,
-              currentScreen: state.currentScreen,
-              isOptionA: 'iswrong',
-              isOptionB: '',
-              isOptionC: '',
-              isOptionD: '',
-              correctAnswer:
-                  state.questions[state.currentQ].correctAns['correctAns'],
-              correctAnswerVisibility: true));
+              isOptionD: 'iscorrect',
+              correctAnswerVisibility: false,
+              correctAnswer: currentState.questions[currentState.currentQ].correctOption,
+            ));
+          } else {
+            emit(currentState.copyWith(
+                isOptionA: '',
+                isOptionB: '',
+                isOptionC: '',
+                isOptionD: 'iswrong',
+                correctAnswer: currentState.questions[currentState.currentQ].correctOption,
+                correctAnswerVisibility: true));
+          }
         }
-      } else if (event.selectedAnswer ==
-          state.questions[state.currentQ].optionB['b']) {
-        if (event.selectedAnswer ==
-            state.questions[state.currentQ].correctAns['correctAns']) {
-          emit(QuizStates(
-              currentQ: state.currentQ,
-              questions: state.questions,
-              currentScreen: state.currentScreen,
-              isOptionA: '',
-              isOptionB: 'iscorrect',
-              isOptionC: '',
-              isOptionD: '',
-              correctAnswer: '',
-              correctAnswerVisibility: false));
-        } else {
-          emit(QuizStates(
-              currentQ: state.currentQ,
-              questions: state.questions,
-              currentScreen: state.currentScreen,
-              isOptionA: '',
-              isOptionB: 'iswrong',
-              isOptionC: '',
-              isOptionD: '',
-              correctAnswer:
-                  state.questions[state.currentQ].correctAns['correctAns'],
-              correctAnswerVisibility: true));
-        }
-      } else if (event.selectedAnswer ==
-          state.questions[state.currentQ].optionC['c']) {
-        if (event.selectedAnswer ==
-            state.questions[state.currentQ].correctAns['correctAns']) {
-          emit(QuizStates(
-              currentQ: state.currentQ,
-              questions: state.questions,
-              currentScreen: state.currentScreen,
-              isOptionA: '',
-              isOptionB: '',
-              isOptionC: 'iscorrect',
-              isOptionD: '',
-              correctAnswer: '',
-              correctAnswerVisibility: false));
-        } else {
-          emit(QuizStates(
-              currentQ: state.currentQ,
-              questions: state.questions,
-              currentScreen: state.currentScreen,
-              isOptionA: '',
-              isOptionB: '',
-              isOptionC: 'iswrong',
-              isOptionD: '',
-              correctAnswer:
-                  state.questions[state.currentQ].correctAns['correctAns'],
-              correctAnswerVisibility: true));
-        }
-      } else if (event.selectedAnswer ==
-          state.questions[state.currentQ].optionD['d']) {
-        if (event.selectedAnswer ==
-            state.questions[state.currentQ].correctAns['correctAns']) {
-          emit(QuizStates(
-            currentQ: state.currentQ,
-            questions: state.questions,
-            currentScreen: state.currentScreen,
-            isOptionA: '',
-            isOptionB: '',
-            isOptionC: '',
-            isOptionD: 'iscorrect',
-            correctAnswerVisibility: false,
-            correctAnswer:
-                state.questions[state.currentQ].correctAns['correctAns'],
-          ));
-        } else {
-          emit(QuizStates(
-              currentQ: state.currentQ,
-              questions: state.questions,
-              currentScreen: state.currentScreen,
-              isOptionA: '',
-              isOptionB: '',
-              isOptionC: '',
-              isOptionD: 'iswrong',
-              correctAnswer:
-                  state.questions[state.currentQ].correctAns['correctAns'],
-              correctAnswerVisibility: true));
-        }
+
       }
+
     });
   }
+
+
+
 }
+
+

@@ -2,6 +2,34 @@ import 'dart:io';
 
 import '../../domain/quiz_model.dart';
 
+//Intital quiz model data structure
+class QuizModelConsole {
+  final String question;
+  final Map<String, String> optionA;
+  final Map<String, String> optionB;
+  final Map<String, String> optionC;
+  final Map<String, String> optionD;
+  final Map<String, String> correctAns;
+  QuizModelConsole(
+      {required this.question,
+      required this.optionA,
+      required this.optionB,
+      required this.optionC,
+      required this.optionD,
+      required this.correctAns});
+
+  factory QuizModelConsole.fromJson(Map<dynamic, dynamic> json) {
+    return QuizModelConsole(
+      question: json['question'],
+      optionA: json[{'optionA'}],
+      optionB: json[{'optionB'}],
+      optionC: json[{'optionC'}],
+      optionD: json[{'optionD'}],
+      correctAns: json[{'correctAns'}],
+    );
+  }
+}
+
 void QuizStart({required String subject}) {
   // List<QuizModel> physicsQuestions = [];
   List<QuizModel> biologyQuestions = [];
@@ -15,15 +43,15 @@ void QuizStart({required String subject}) {
 
 void physicsEngine() {
   print('Welcome to physics');
-  List<QuizModel> physicsQuestions = [];
-  physicsQuestions.add(QuizModel(
+  List<QuizModelConsole> physicsQuestions = [];
+  physicsQuestions.add(QuizModelConsole(
       question: "(1) What is science?",
       optionA: {'a': '(a) an art'},
       optionB: {'b': '(b) a branch'},
       optionC: {'c': '(c) a base'},
       optionD: {'d': '(d) hey'},
       correctAns: {'correctAns': 'a'}));
-  physicsQuestions.add(QuizModel(
+  physicsQuestions.add(QuizModelConsole(
       question: "(2) What is science?",
       optionA: {'a': '(a) an art'},
       optionB: {'b': '(b) a branch'},
@@ -31,7 +59,7 @@ void physicsEngine() {
       optionD: {'d': '(d) hey'},
       correctAns: {'correctAns': 'a'}));
 
-  physicsQuestions.add(QuizModel(
+  physicsQuestions.add(QuizModelConsole(
       question: "(3) What is science?",
       optionA: {'a': '(a) an art'},
       optionB: {'b': '(b) a branch'},
@@ -57,8 +85,8 @@ void physicsEngine() {
 
 void chemistryEngine() {
   print('Welcome to chemistry');
-  List<QuizModel> chemistryQuestions = [];
-  chemistryQuestions.add(QuizModel(
+  List<QuizModelConsole> chemistryQuestions = [];
+  chemistryQuestions.add(QuizModelConsole(
     question: '(1) What is a matter?',
     optionA: {'a': '(a) Anything that has weight and occupies space'},
     optionB: {'b': '(b) null'},
