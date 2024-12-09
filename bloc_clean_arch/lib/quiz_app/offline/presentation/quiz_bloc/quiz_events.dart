@@ -11,13 +11,28 @@ class PreviousQuestion extends QuizEvents {
 }
 
 class LoadQuestion extends QuizEvents {
+  final bool isFromWeb;
   final String questionCategory;
-  const LoadQuestion({required this.questionCategory});
+  const LoadQuestion({
+    required this.questionCategory,
+    required this.isFromWeb
+  });
 }
 
 class AnswerCheck extends QuizEvents {
   final String? selectedAnswer;
   const AnswerCheck({required this.selectedAnswer});
+}
+
+class UploadQuestionToFireStore extends QuizEvents {
+  final String questions;
+  final String questionCategory;
+
+  const UploadQuestionToFireStore({
+    required this.questions,
+    required this.questionCategory,
+
+  });
 }
 
 // class NavigationEvent extends QuizEvents {

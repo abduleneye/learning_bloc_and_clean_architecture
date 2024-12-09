@@ -1,27 +1,43 @@
-import 'package:bloc_clean_arch/quiz_app/data/local/quiz_repo_implementation.dart';
-import 'package:bloc_clean_arch/quiz_app/domain/quiz_repo.dart';
-import 'package:bloc_clean_arch/quiz_app/presentation/quiz_bloc/quiz_bloc.dart';
-import 'package:bloc_clean_arch/quiz_app/presentation/quiz_bloc/quiz_events.dart';
-import 'package:bloc_clean_arch/quiz_app/presentation/quiz_screen_view.dart';
+
+import 'package:bloc_clean_arch/quiz_app/offline/data/local/quiz_repo_implementation.dart';
+import 'package:bloc_clean_arch/quiz_app/offline/domain/quiz_repo.dart';
+import 'package:bloc_clean_arch/quiz_app/offline/presentation/quiz_bloc/quiz_bloc.dart';
+import 'package:bloc_clean_arch/quiz_app/offline/presentation/ui_components/quiz_screen_view.dart';
+import 'package:bloc_clean_arch/quiz_app/offline/presentation/upload_question_page.dart';
 import 'package:bloc_clean_arch/simple_calculator_app_cubit_bloc/presentation/calc_view_component/my_button.dart';
 import 'package:bloc_clean_arch/social_app_instagram_like/features/responsive/constraint_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class OfflineCategoryScreen extends StatefulWidget {
-  const OfflineCategoryScreen({super.key});
+class OnlineCategoryScreen extends StatefulWidget {
+  const OnlineCategoryScreen({super.key});
 
   @override
-  State<OfflineCategoryScreen> createState() => _OfflineCategoryScreenState();
+  State<OnlineCategoryScreen> createState() => _OfflineCategoryScreenState();
 }
 
-class _OfflineCategoryScreenState extends State<OfflineCategoryScreen> {
+class _OfflineCategoryScreenState extends State<OnlineCategoryScreen> {
   final QuizRepo quizRepo = QuizRepoImplementation();
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedScaffold(
-      appBar: AppBar(title: const Text('Offline Category')),
+    return Scaffold(
+      appBar: AppBar(
+          title: const Text('Online Category'),
+        actions: [
+          //upload new questions Button
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const UploadQuestionsPage()
+                  ));
+            },
+            icon: const Icon(Icons.upload),
+          ),
+        ],
+      ),
       body: Center(
         child: SingleChildScrollView(
           child: Column(
@@ -52,12 +68,15 @@ class _OfflineCategoryScreenState extends State<OfflineCategoryScreen> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => BlocProvider(
-                                      create: (context) =>
-                                          QuizBloc(quizRepo: quizRepo),
-                                      child: const MyQuizScreen(
-                                        questionCategory: 'physics',
-                                      ),
-                                    )));
+                                  create: (context) =>
+                                      QuizBloc(quizRepo: quizRepo),
+                                  child: const MyQuizScreen(
+                                    questionCategory: 'physics',
+                                    fromWeb: true,
+
+
+                                  ),
+                                )));
                         // context.read<QuizBloc>().add(
                         //     const LoadQuestion(questionCategory: 'physics'));
                         // context.read<QuizBloc>().add(const NavigationEvent(
@@ -71,12 +90,13 @@ class _OfflineCategoryScreenState extends State<OfflineCategoryScreen> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => BlocProvider(
-                                    create: (context) =>
-                                        QuizBloc(quizRepo: quizRepo),
-                                    child: const MyQuizScreen(
-                                      questionCategory: 'chemistry',
-                                    ),
-                                  )));
+                                create: (context) =>
+                                    QuizBloc(quizRepo: quizRepo),
+                                child: const MyQuizScreen(
+                                  questionCategory: 'chemistry',
+                                  fromWeb: true,
+                                ),
+                              )));
                     },
                     id: 'Chemistry',
                   )

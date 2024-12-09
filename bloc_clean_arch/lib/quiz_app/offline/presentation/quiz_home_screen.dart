@@ -1,12 +1,14 @@
-import 'package:bloc_clean_arch/quiz_app/data/local/quiz_repo_implementation.dart';
-import 'package:bloc_clean_arch/quiz_app/domain/quiz_repo.dart';
-import 'package:bloc_clean_arch/quiz_app/presentation/offline_category_screen.dart';
-import 'package:bloc_clean_arch/quiz_app/presentation/quiz_bloc/quiz_bloc.dart';
-import 'package:bloc_clean_arch/quiz_app/presentation/quiz_bloc/quiz_events.dart';
+import 'package:bloc_clean_arch/quiz_app/offline/data/local/quiz_repo_implementation.dart';
+import 'package:bloc_clean_arch/quiz_app/offline/domain/quiz_repo.dart';
+import 'package:bloc_clean_arch/quiz_app/offline/presentation/offline_category_screen.dart';
+import 'package:bloc_clean_arch/quiz_app/offline/presentation/quiz_bloc/quiz_bloc.dart';
 import 'package:bloc_clean_arch/simple_calculator_app_cubit_bloc/presentation/calc_view_component/my_button.dart';
 import 'package:bloc_clean_arch/social_app_instagram_like/features/responsive/constraint_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'online_category_screen.dart';
+
 
 class QuizHomeScreen extends StatefulWidget {
   const QuizHomeScreen({super.key});
@@ -51,7 +53,14 @@ class _QuizHomeScreenState extends State<QuizHomeScreen> {
                         id: 'Offline',
                       ),
                       MyButton(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                  const OnlineCategoryScreen()));
+
+                        },
                         id: 'Online',
                       )
                     ],

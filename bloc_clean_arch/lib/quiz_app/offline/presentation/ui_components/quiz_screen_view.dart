@@ -1,15 +1,21 @@
-import 'package:bloc_clean_arch/quiz_app/presentation/quiz_bloc/quiz_bloc.dart';
-import 'package:bloc_clean_arch/quiz_app/presentation/quiz_bloc/quiz_events.dart';
-import 'package:bloc_clean_arch/quiz_app/presentation/quiz_bloc/quiz_states.dart';
-import 'package:bloc_clean_arch/quiz_app/presentation/ui_components/quiz_screen_card.dart';
+import 'package:bloc_clean_arch/quiz_app/offline/presentation/quiz_bloc/quiz_bloc.dart';
+import 'package:bloc_clean_arch/quiz_app/offline/presentation/quiz_bloc/quiz_events.dart';
+import 'package:bloc_clean_arch/quiz_app/offline/presentation/quiz_bloc/quiz_states.dart';
 import 'package:bloc_clean_arch/social_app_instagram_like/features/responsive/constraint_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'quiz_screen_card.dart';
+
 class MyQuizScreen extends StatefulWidget {
   final String questionCategory;
-  const MyQuizScreen({super.key, required this.questionCategory});
+  final bool fromWeb;
+  const MyQuizScreen({
+    super.key,
+    required this.questionCategory,
+    required this.fromWeb
+  });
 
   @override
   State<MyQuizScreen> createState() => _MyQuizScreenState();
@@ -27,9 +33,23 @@ class _MyQuizScreenState extends State<MyQuizScreen> {
   @override
   void initState() {
     super.initState();
-    context
-        .read<QuizBloc>()
-        .add(LoadQuestion(questionCategory: widget.questionCategory));
+    if(widget.fromWeb){
+      context
+          .read<QuizBloc>()
+          .add(LoadQuestion(
+          questionCategory: widget.questionCategory,
+          isFromWeb: true
+      ));
+    }else{
+      context
+          .read<QuizBloc>()
+          .add(LoadQuestion(
+          questionCategory: widget.questionCategory,
+          isFromWeb: false
+      ));
+
+    }
+
   }
   // void next() {
   //   setState(() {
@@ -70,6 +90,23 @@ class _MyQuizScreenState extends State<MyQuizScreen> {
             return ConstrainedScaffold(
                 appBar: AppBar(
                   title: const Text('QUIZ SCREEN'),
+                  actions: [
+                    //upload new questions Button
+                    if(widget.fromWeb)
+                    IconButton(
+                      onPressed: () {
+                        context
+                            .read<QuizBloc>()
+                            .add(LoadQuestion(
+                            questionCategory: widget.questionCategory,
+                            isFromWeb: true
+                        ));
+
+
+                      },
+                      icon: const Icon(Icons.refresh),
+                    ),
+                  ],
                 ),
                 body: Center(
                   child: SingleChildScrollView(
@@ -82,8 +119,9 @@ class _MyQuizScreenState extends State<MyQuizScreen> {
                             containerWidth:
                             MediaQuery.of(context).size.width / 1.18,
                             containerInnerPadding: 25,
-                            questionOrOption:
-                            state.questions[state.currentQ].question),
+                            questionOrOption:  "(${state.currentQ + 1}) ${state.questions[state.currentQ].question}"
+
+                        ),
                         const SizedBox(
                           height: 10,
                         ),

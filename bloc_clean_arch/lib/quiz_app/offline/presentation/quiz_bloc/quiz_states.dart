@@ -1,4 +1,4 @@
-import 'package:bloc_clean_arch/quiz_app/domain/quiz_model.dart';
+import 'package:bloc_clean_arch/quiz_app/offline/domain/quiz_model.dart';
 
 abstract class QuizStates {}
 
@@ -57,6 +57,10 @@ final bool correctAnswerVisibility;
 
 }
 
-class QuizError extends QuizStates {}
+class QuizError extends QuizStates {
 
-class QuizEnded extends QuizStates {}
+}
+
+class QuizEnded extends QuizStates {
+
+}

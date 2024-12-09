@@ -1,31 +1,13 @@
 import 'package:bloc_clean_arch/api_apps/movie_api_call/data/local/movies_api_request_repo_implementation.dart';
-import 'package:bloc_clean_arch/api_apps/movie_api_call/presentation/movie_screen.dart';
 import 'package:bloc_clean_arch/api_apps/movie_api_call/presentation/movies_api_bloc/movies_bloc.dart';
 import 'package:bloc_clean_arch/core/presentation/views_or_pages/all_apps_home_screen.dart';
-import 'package:bloc_clean_arch/counter_apps/countdown_timer/presentation/count_down_screen.dart';
-import 'package:bloc_clean_arch/counter_apps/countdown_timer/presentation/countdown_bloc_statemanagement/countdown_bloc.dart';
-import 'package:bloc_clean_arch/counter_apps/counter_app/counter_cubit_bloc/counter_page.dart';
 import 'package:bloc_clean_arch/config/firebase_options.dart';
-import 'package:bloc_clean_arch/quiz_app/presentation/quiz_bloc/quiz_bloc.dart';
-import 'package:bloc_clean_arch/quiz_app/presentation/quiz_screen_view.dart';
-import 'package:bloc_clean_arch/simple_calculator_app_cubit_bloc/presentation/calc_view.dart';
 import 'package:bloc_clean_arch/social_app_instagram_like/themes/light_mode_theme.dart';
-import 'package:bloc_clean_arch/social_app_instagram_like/features/auth/presentation/views/auth_page.dart';
-import 'package:bloc_clean_arch/social_app_instagram_like/features/auth/presentation/views/login_page.dart';
-import 'package:bloc_clean_arch/social_app_instagram_like/features/auth/presentation/views/register_page.dart';
-import 'package:bloc_clean_arch/social_app_instagram_like/social_app.dart';
-import 'package:bloc_clean_arch/todo_app_cubit_bloc/data/local/model/isar_todo.dart';
-import 'package:bloc_clean_arch/todo_app_cubit_bloc/data/repository/isar_todo_repo.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 //import 'package:fluttertoast/fluttertoast.dart';
-import 'package:isar/isar.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:toast/toast.dart';
 
-import 'social_app_instagram_like/social_app.dart';
-import 'todo_app_cubit_bloc/domain/repoistory/todo_repo.dart';
 
 void main() async {
   //Firebase setup

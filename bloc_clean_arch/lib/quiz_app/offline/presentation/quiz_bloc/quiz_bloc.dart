@@ -1,8 +1,6 @@
-import 'package:bloc_clean_arch/quiz_app/domain/quiz_repo.dart';
-import 'package:bloc_clean_arch/quiz_app/question_holder_class_similar_to_my_kotlin_quiz_app.dart';
-import 'package:bloc_clean_arch/quiz_app/presentation/quiz_bloc/quiz_events.dart';
-import 'package:bloc_clean_arch/quiz_app/presentation/quiz_bloc/quiz_states.dart';
-import 'package:bloc_clean_arch/quiz_app/domain/quiz_model.dart';
+import 'package:bloc_clean_arch/quiz_app/offline/domain/quiz_repo.dart';
+import 'package:bloc_clean_arch/quiz_app/offline/presentation/quiz_bloc/quiz_events.dart';
+import 'package:bloc_clean_arch/quiz_app/offline/presentation/quiz_bloc/quiz_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -13,28 +11,55 @@ class QuizBloc extends Bloc<QuizEvents, QuizStates> {
   QuizBloc({required this.quizRepo})
       : super( QuizInitial()) {
 
+    on<UploadQuestionToFireStore>((event, emit) async{
+      try{
+        emit(QuizLoading());
+        quizRepo.uploadQuestionsToFireStore(
+            questionCategory: event.questionCategory,
+            questions: event.questions
+        );
+        
+        emit(QuizInitial());
+      }catch(e){
+
+      }
+
+
+
+    });
+
     on<LoadQuestion>((event, emit) async {
-      quizRepo.uploadPhysicsQuestionsToFireStore();
-      quizRepo.loadQuestionsFromJsonLocally();
+     // quizRepo.loadQuestionsFromJsonLocally();
       emit(QuizLoading());
       try{
-        final loadedQuestions =
-        await quizRepo.fetchQuizQuestions(category: event.questionCategory);
+        if(event.isFromWeb){
+          final loadedQuestionFromFireStore = await quizRepo.fetchQuestionFromFireStore(questionCategory: event.questionCategory);
+          emit(QuizLoaded(
+              currentQ: 0,
+              questions: loadedQuestionFromFireStore,
+              // shuffledOptions: state.questions[state.currentQ].allOptions,
+              isOptionA: "",
+              isOptionB: "",
+              isOptionC: "",
+              isOptionD: "",
+              correctAnswerVisibility: false,
+              correctAnswer: ""));
 
-        final loadedPhysicsQuestionFromFireStore = await quizRepo.fetchPhysicsQuestionFromFireStore();
+        }else{
+          final loadedQuestions =
+          await quizRepo.fetchQuizQuestions(questionCategory: event.questionCategory);
+          emit(QuizLoaded(
+              currentQ: 0,
+              questions: loadedQuestions,
+              // shuffledOptions: state.questions[state.currentQ].allOptions,
+              isOptionA: "",
+              isOptionB: "",
+              isOptionC: "",
+              isOptionD: "",
+              correctAnswerVisibility: false,
+              correctAnswer: ""));
+        }
 
-
-
-        emit(QuizLoaded(
-            currentQ: 0,
-            questions: loadedPhysicsQuestionFromFireStore,
-            // shuffledOptions: state.questions[state.currentQ].allOptions,
-            isOptionA: "",
-            isOptionB: "",
-            isOptionC: "",
-            isOptionD: "",
-            correctAnswerVisibility: false,
-            correctAnswer: ""));
 
       }catch(e){
         emit(QuizError());
@@ -44,7 +69,7 @@ class QuizBloc extends Bloc<QuizEvents, QuizStates> {
 
 
     on<NextQuestion>((event, emit){
-      quizRepo.fetchPhysicsQuestionFromFireStore();
+      //quizRepo.fetchPhysicsQuestionFromFireStore();
       final currentState = state;
       if(currentState is QuizLoaded){
         if (currentState.currentQ < currentState.questions.length - 1) {
@@ -65,7 +90,7 @@ class QuizBloc extends Bloc<QuizEvents, QuizStates> {
               timeInSecForIosWeb: 1,
               backgroundColor: Colors.red,
               textColor: Colors.white,
-              fontSize: 16.0);
+              fontSize: 10.0);
         }
 
       }
@@ -92,7 +117,7 @@ class QuizBloc extends Bloc<QuizEvents, QuizStates> {
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.red,
           textColor: Colors.white,
-          fontSize: 16.0);
+          fontSize: 10.0);
     }
       }
 

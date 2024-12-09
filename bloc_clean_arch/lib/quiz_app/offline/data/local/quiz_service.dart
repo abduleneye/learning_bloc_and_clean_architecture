@@ -1,6 +1,8 @@
 import 'dart:io';
 
-import '../../domain/quiz_model.dart';
+import 'package:bloc_clean_arch/quiz_app/offline/domain/quiz_model.dart';
+
+
 
 //Intital quiz model data structure
 class QuizModelConsole {

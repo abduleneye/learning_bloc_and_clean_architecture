@@ -2,10 +2,7 @@ import 'package:bloc_clean_arch/api_apps/movie_api_call/data/local/movies_api_re
 import 'package:bloc_clean_arch/api_apps/movie_api_call/presentation/movie_screen.dart';
 import 'package:bloc_clean_arch/api_apps/movie_api_call/presentation/movies_api_bloc/movies_bloc.dart';
 import 'package:bloc_clean_arch/counter_apps/core/presentation/views/counter_apps_home.dart';
-import 'package:bloc_clean_arch/quiz_app/data/local/quiz_repo_implementation.dart';
-import 'package:bloc_clean_arch/quiz_app/domain/quiz_repo.dart';
-import 'package:bloc_clean_arch/quiz_app/presentation/quiz_bloc/quiz_bloc.dart';
-import 'package:bloc_clean_arch/quiz_app/presentation/quiz_home_screen.dart';
+import 'package:bloc_clean_arch/quiz_app/offline/presentation/quiz_home_screen.dart';
 import 'package:bloc_clean_arch/simple_calculator_app_cubit_bloc/presentation/calc_view.dart';
 import 'package:bloc_clean_arch/simple_calculator_app_cubit_bloc/presentation/calc_view_component/my_button.dart';
 import 'package:bloc_clean_arch/social_app_instagram_like/features/responsive/constraint_scaffold.dart';
