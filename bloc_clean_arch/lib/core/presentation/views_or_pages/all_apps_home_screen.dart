@@ -2,6 +2,7 @@ import 'package:bloc_clean_arch/api_apps/movie_api_call/data/local/movies_api_re
 import 'package:bloc_clean_arch/api_apps/movie_api_call/presentation/movie_screen.dart';
 import 'package:bloc_clean_arch/api_apps/movie_api_call/presentation/movies_api_bloc/movies_bloc.dart';
 import 'package:bloc_clean_arch/counter_apps/core/presentation/views/counter_apps_home.dart';
+import 'package:bloc_clean_arch/iot_apps/core/views/iot_apps_home_screen.dart';
 import 'package:bloc_clean_arch/quiz_app/offline/presentation/quiz_home_screen.dart';
 import 'package:bloc_clean_arch/simple_calculator_app_cubit_bloc/presentation/calc_view.dart';
 import 'package:bloc_clean_arch/simple_calculator_app_cubit_bloc/presentation/calc_view_component/my_button.dart';
@@ -65,9 +66,16 @@ class _AllAppsHomeScreenState extends State<AllAppsHomeScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    MyButton(onTap: () {}, id: 'IOT APPS '),
+                    MyButton(onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                              const IotAppsHomeScreen()));
+                    }, id: 'IOT APPS '),
                     MyButton(
                         onTap: () {
+
                           Navigator.push(
                               context,
                               MaterialPageRoute(

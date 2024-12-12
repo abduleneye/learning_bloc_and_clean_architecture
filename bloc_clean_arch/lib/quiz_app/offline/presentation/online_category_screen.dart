@@ -23,7 +23,10 @@ class _OfflineCategoryScreenState extends State<OnlineCategoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text('Online Category'),
+          title: const Text(
+              'Online Category',
+              style: TextStyle(fontWeight: FontWeight.bold)
+          ),
         actions: [
           //upload new questions Button
           IconButton(

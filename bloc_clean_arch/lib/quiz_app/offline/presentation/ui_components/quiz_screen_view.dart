@@ -89,7 +89,10 @@ class _MyQuizScreenState extends State<MyQuizScreen> {
           } else {
             return ConstrainedScaffold(
                 appBar: AppBar(
-                  title: const Text('QUIZ SCREEN'),
+                  title: const Text(
+                      'QUIZ SCREEN',
+                    style: TextStyle(fontWeight: FontWeight.bold)
+                  ),
                   actions: [
                     //upload new questions Button
                     if(widget.fromWeb)

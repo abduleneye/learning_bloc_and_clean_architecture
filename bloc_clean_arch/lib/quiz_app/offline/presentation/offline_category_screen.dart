@@ -22,7 +22,10 @@ class _OfflineCategoryScreenState extends State<OfflineCategoryScreen> {
   @override
   Widget build(BuildContext context) {
     return ConstrainedScaffold(
-      appBar: AppBar(title: const Text('Offline Category')),
+      appBar: AppBar(title: const Text(
+          'Offline Category',
+          style: TextStyle(fontWeight: FontWeight.bold)
+      )),
       body: Center(
         child: SingleChildScrollView(
           child: Column(
