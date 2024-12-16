@@ -1,6 +1,9 @@
+import 'package:bloc_clean_arch/iot_apps/features/test/features/bcl/data/local/blc_repo_implementation.dart';
+import 'package:bloc_clean_arch/iot_apps/features/test/features/bcl/presentation/bluetooth_classic_bloc/blc_bloc.dart';
 import 'package:bloc_clean_arch/iot_apps/features/test/features/bcl/presentation/views/bluetooth_classic_devices_screen.dart';
 import 'package:bloc_clean_arch/simple_calculator_app_cubit_bloc/presentation/calc_view_component/my_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class IotTestsHomeScreen extends StatefulWidget {
@@ -11,6 +14,7 @@ class IotTestsHomeScreen extends StatefulWidget {
 }
 
 class _IotTestsHomeScreenState extends State<IotTestsHomeScreen> {
+  final bluetoothClassicRepo = BluetoothClassicRepoImplementation();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,9 +32,10 @@ class _IotTestsHomeScreenState extends State<IotTestsHomeScreen> {
                 children: [
                   MyButton(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) =>
-                          const BtClassicDevicesScreen(
-                          )
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => BlocProvider(create: (context) => BluetoothClassicBloc(bluetoothClassicRepo: bluetoothClassicRepo), child:  const BtClassicDevicesScreen(
+                          ),)
+                         
                       ));
                     },
                     id: 'BCL',

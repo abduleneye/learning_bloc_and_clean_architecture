@@ -32,7 +32,6 @@ final bool correctAnswerVisibility;
 });
 
   QuizLoaded copyWith({
-
      int? currentQ,
      List<QuizModel>? questions,
      String? isOptionA,

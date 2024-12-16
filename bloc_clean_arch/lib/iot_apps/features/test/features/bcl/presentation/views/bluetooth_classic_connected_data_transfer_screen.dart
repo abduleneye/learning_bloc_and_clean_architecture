@@ -2,8 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:bloc_clean_arch/iot_apps/features/test/features/bcl/presentation/bluetooth_classic_bloc/blc_bloc.dart';
+import 'package:bloc_clean_arch/iot_apps/features/test/features/bcl/presentation/bluetooth_classic_bloc/blc_events.dart';
+import 'package:bloc_clean_arch/iot_apps/features/test/features/bcl/presentation/bluetooth_classic_bloc/blc_states.dart';
 import 'package:bloc_clean_arch/social_app_instagram_like/features/auth/presentation/components/my_text_field_social_app.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -25,6 +29,7 @@ class _BluetoothClassicConnectedScreenState extends State<BluetoothClassicConnec
   String incomingData = "";
   String ledStatus = "";
   bool deviceConnectionStatus = false;
+  //flutter pub get percent_indicator
 
 
   StreamSubscription<Uint8List>? getIncomingData(){
@@ -38,24 +43,16 @@ class _BluetoothClassicConnectedScreenState extends State<BluetoothClassicConnec
           ledStatus = "LED_ON";
         }
 
-        // if(widget.connectedDevice!.isConnected){
-        //   deviceConnectionStatus = true;
-        // }
-        //
-        // if(widget.connectedDevice!.isConnected == false){
-        //   deviceConnectionStatus = false;
-        // }
-
       });
      // print("Incoming data ${ascii.decode(data)}");
     });
 
   }
 
-  StreamSubscription<bool> getConnectionStatus() {
+  StreamSubscription<bool?> getConnectionStatus() {
     //return Stream.value('Lawal');
     return Stream.periodic(const Duration(seconds: 1), (value) {
-      return widget.connectedDevice!.isConnected;
+      return widget.connectedDevice?.isConnected;
     }).listen((onData){
       setState(() {
         if(onData == true){
@@ -75,7 +72,11 @@ class _BluetoothClassicConnectedScreenState extends State<BluetoothClassicConnec
             backgroundColor: Colors.red,
             textColor: Colors.white,
             fontSize: 10.0);
-        Navigator.pop(context);
+        widget.connectedDevice?.dispose();
+        getIncomingData()?.cancel();
+        sendCommandTextFieldController.dispose();
+        getConnectionStatus().cancel();
+        context.read<BluetoothClassicBloc>().add(DisconnectionEvent());
       }
 
     });
@@ -105,81 +106,95 @@ class _BluetoothClassicConnectedScreenState extends State<BluetoothClassicConnec
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-          appBar: AppBar(title: const Text("Data Transfer Screen"),),
-          body: Center(
-            child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
+    return BlocBuilder<BluetoothClassicBloc, BluetoothClassicState>(builder: (context, state){
+      if(state is NavigateToConnectedDataScreen){
+        return SafeArea(
+          child: Scaffold(
+              appBar: AppBar(title: const Text("Data Transfer Screen"),),
+              body: Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
 
-                            Text(
-                              deviceConnectionStatus.toString(),
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.primary,
-                                fontSize: 12,
-                              ),
-                            ),
+                      Text(
+                        deviceConnectionStatus.toString(),
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontSize: 12,
+                        ),
+                      ),
 
-                            Text(
-                              ledStatus,
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.primary,
-                                fontSize: 12,
-                              ),
-                            ),
-                            Text(
-                              "connected to ${widget.deviceName}",
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.primary,
-                                fontSize: 12,
-                              ),
-                            ),
+                      Text(
+                        ledStatus,
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontSize: 12,
+                        ),
+                      ),
+                      Text(
+                        "connected to ${widget.deviceName}",
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontSize: 12,
+                        ),
+                      ),
 
-                            MyTextFieldSocialApp(
-                                controller: sendCommandTextFieldController,
-                                hintText: "Enter command",
-                                obscureText: false),
-                            TextButton(onPressed: (){
+                      MyTextFieldSocialApp(
+                          controller: sendCommandTextFieldController,
+                          hintText: "Enter command",
+                          obscureText: false),
+                      TextButton(onPressed: (){
 
-                              widget.connectedDevice?.output.add(ascii.encode(sendCommandTextFieldController.text));
+                        widget.connectedDevice?.output.add(ascii.encode(sendCommandTextFieldController.text));
 
-                            }, child: const Text(
-                                "Send"
-                            )),
-                            TextButton(onPressed: (){
-                              getIncomingData();
-                            }, child: const Text(
-                                "Get data"
-                            )),
-                            const SizedBox(
-                              height: 24,
-                            ),
-                            Expanded(child: Text(
-                              maxLines: 10,
-                                "data here:\n $incomingData"
-                            ))
+                      }, child: const Text(
+                          "Send"
+                      )),
+                      TextButton(onPressed: (){
+                        getIncomingData();
+                      }, child: const Text(
+                          "Get data"
+                      )),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      Expanded(child:
+                      Container(
+                        color: Colors.grey,
+                        height: 500,
+                        width: 500,
+                        child: Padding(padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                        child: Text(
+                            maxLines: 20,
+                            "data here:\n $incomingData"
+                        ),)
+                      )
+                      )
 
-                            // Expanded(
-                            //     child: Card(
-                            //       color: Colors.blueAccent,
-                            //       shape: RoundedRectangleBorder(
-                            //         borderRadius: BorderRadius.circular(12)
-                            //       ),
-                            //       elevation: 4,
-                            //       child:
-                            //     )
-                            // )
-                          ],
-                        )
+                      // Expanded(
+                      //     child: Card(
+                      //       color: Colors.blueAccent,
+                      //       shape: RoundedRectangleBorder(
+                      //         borderRadius: BorderRadius.circular(12)
+                      //       ),
+                      //       elevation: 4,
+                      //       child:
+                      //     )
+                      // )
+                    ],
+                  )
 
-              ,
-            ),
-          )
-      ),
+                  ,
+                ),
+              )
+          ),
 
-    );
+        );
+      }
+      return const Center(child: Text("Unavailable"),);
+
+    });
   }
 }
