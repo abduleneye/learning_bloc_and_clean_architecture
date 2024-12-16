@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
+import 'dart:math';
 
 import 'package:bloc_clean_arch/iot_apps/features/test/features/bcl/presentation/bluetooth_classic_bloc/blc_bloc.dart';
 import 'package:bloc_clean_arch/iot_apps/features/test/features/bcl/presentation/bluetooth_classic_bloc/blc_events.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class BluetoothClassicConnectedScreen extends StatefulWidget {
   final BluetoothConnection? connectedDevice;
@@ -26,16 +28,20 @@ class BluetoothClassicConnectedScreen extends StatefulWidget {
 
 class _BluetoothClassicConnectedScreenState extends State<BluetoothClassicConnectedScreen> {
 
-  String incomingData = "";
+  int count = 0;
+  double incomingData = 0.0;
   String ledStatus = "";
   bool deviceConnectionStatus = false;
+  double sensorData = 0.0;
+  Color bgColor = Colors.blue;
   //flutter pub get percent_indicator
 
 
   StreamSubscription<Uint8List>? getIncomingData(){
     return widget.connectedDevice?.input?.listen((Uint8List data){
       setState(() {
-        incomingData = ascii.decode(data);
+        incomingData =  double.parse(ascii.decode(data).trim()) ;
+        print("This is ur data: ${incomingData}");
         if(incomingData == "led_off"){
           ledStatus = "LED_OFF";
         }
@@ -44,7 +50,23 @@ class _BluetoothClassicConnectedScreenState extends State<BluetoothClassicConnec
         }
 
       });
-     // print("Incoming data ${ascii.decode(data)}");
+      setState(() {
+        if(incomingData >= 0.0 && incomingData <= 0.3){
+          bgColor = Colors.red;
+        } else if(incomingData >= 0.3 && incomingData <= 0.6){
+          bgColor = Colors.orange;
+
+        }else if(incomingData >= 0.6 && incomingData <= 0.9){
+          bgColor = Colors.blue;
+
+        }else if(incomingData == 1.0){
+          bgColor = Colors.white;
+
+        }
+
+      });
+
+      print("Incoming data ${ascii.decode(data)}");
     });
 
   }
@@ -89,6 +111,7 @@ class _BluetoothClassicConnectedScreenState extends State<BluetoothClassicConnec
   void initState() {
     getIncomingData();
     getConnectionStatus();
+    //mockSignalGenerator();
     super.initState();
   }
 
@@ -100,6 +123,40 @@ class _BluetoothClassicConnectedScreenState extends State<BluetoothClassicConnec
     sendCommandTextFieldController.dispose();
     getConnectionStatus().cancel();
     super.dispose();
+  }
+
+  void mockSignalGenerator(){
+    const maxUpdates = 1000;
+    final random = Random();
+    Timer.periodic(const Duration(seconds:1),(timer){
+      setState(() {
+         sensorData = random.nextDouble();
+         count++;
+         print("Sensor data: ${sensorData}");
+
+      });
+      setState(() {
+        if(sensorData >= 0.0 && sensorData <= 0.3){
+          bgColor = Colors.red;
+        } else if(sensorData >= 0.3 && sensorData <= 0.6){
+          bgColor = Colors.orange;
+
+        }else if(sensorData >= 0.6 && sensorData <= 0.9){
+          bgColor = Colors.blue;
+
+        }else if(sensorData == 1.0){
+          bgColor = Colors.white;
+
+        }
+
+      });
+
+      if(count>= maxUpdates){
+        timer.cancel();
+        print("Sensor simulation ended");
+      }
+    });
+
   }
 
 
@@ -161,15 +218,32 @@ class _BluetoothClassicConnectedScreenState extends State<BluetoothClassicConnec
                         height: 24,
                       ),
                       Expanded(child:
-                      Container(
-                        color: Colors.grey,
+                       Container(
+                        //color: Colors.wh,
                         height: 500,
                         width: 500,
                         child: Padding(padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                        child: Text(
-                            maxLines: 20,
-                            "data here:\n $incomingData"
-                        ),)
+                        child: Column(
+                          mainAxisAlignment:MainAxisAlignment.center,
+                          children: [
+                            // Text(
+                            //     maxLines: 20,
+                            //     "data here:\n $incomingData"
+                            // ),
+                            CircularPercentIndicator(
+                              animation: true,
+                              radius: 50,
+                              lineWidth: 10,
+                              percent: incomingData,  //sensorData
+                              progressColor: bgColor,
+                              backgroundColor: Colors.deepPurple.shade100,
+                              circularStrokeCap: CircularStrokeCap.round,
+                              center:  Text("${incomingData}%", style: const TextStyle(fontSize: 8)),
+                              //(sensorData*100).round()}
+                            )
+                          ],
+                        )
+                          ,)
                       )
                       )
 
