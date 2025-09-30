@@ -231,16 +231,23 @@ class _BluetoothClassicConnectedScreenState extends State<BluetoothClassicConnec
                             //     "data here:\n $incomingData"
                             // ),
                             CircularPercentIndicator(
-                              animation: true,
+                              animation: false,
                               radius: 50,
                               lineWidth: 10,
-                              percent: incomingData,  //sensorData
+                              percent: incomingData/100,  //sensorData
                               progressColor: bgColor,
                               backgroundColor: Colors.deepPurple.shade100,
                               circularStrokeCap: CircularStrokeCap.round,
-                              center:  Text("${incomingData}%", style: const TextStyle(fontSize: 8)),
+                              center:  Text("${incomingData}%", style: const TextStyle(fontSize: 12)),
                               //(sensorData*100).round()}
-                            )
+                            ),
+
+                            Text(
+                              "${incomingData} *C",
+                              style: const TextStyle(
+                                fontSize: 12,
+                              ),
+                            ),
                           ],
                         )
                           ,)

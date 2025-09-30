@@ -165,7 +165,14 @@ class QuizRepoImplementation extends QuizRepo {
     try{
       if(questionCategory == "physics"){
         String jsonData = await rootBundle.loadString('assets/questions.json');
-        List<dynamic> physicsQuestionList = json.decode(jsonData);
+        final Map<String, dynamic> decode = json.decode(questions);
+        // List<dynamic> physicsQuestionList =  json.decode(
+        //     questions
+        //     //jsonData
+        // );
+        List<dynamic> physicsQuestionList =  decode['questions'];
+          //jsonData
+       // );
 
         //upload question list as a single document
         print("UploadingPhysicsQuestions...");
@@ -185,7 +192,8 @@ class QuizRepoImplementation extends QuizRepo {
 
       }else if(questionCategory == "chemistry"){
         String jsonData = questions;
-        List<dynamic> chemistryQuestionList = json.decode(jsonData);
+        final Map<String, dynamic> decode = json.decode(questions);
+        List<dynamic> chemistryQuestionList = decode['questions'];
 
         //upload question list as a single document
         print("UploadingPhysicsQuestions...");

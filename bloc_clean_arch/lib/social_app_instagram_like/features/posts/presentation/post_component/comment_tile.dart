@@ -34,13 +34,13 @@ class _CommentTileState extends State<CommentTile> {
   void showDeletionDialogBox() {
     showDialog(
         context: context,
-        builder: (context) => AlertDialog(
+        builder: (diagCtx) => AlertDialog(
               title: const Text('Delete Comment'),
               actions: [
                 // cancel button
                 TextButton(
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    Navigator.of(diagCtx).pop();
                   },
                   child: const Text('Cancel'),
                 ),
@@ -52,7 +52,7 @@ class _CommentTileState extends State<CommentTile> {
                           widget.comment.postId,
                           widget.comment.id,
                         );
-                    Navigator.of(context).pop();
+                    Navigator.of(diagCtx).pop();
                   },
                   child: const Text(
                     'Delete',
@@ -63,6 +63,8 @@ class _CommentTileState extends State<CommentTile> {
                 )
               ],
             ));
+    //eneye53@gmal.com
+    
   }
 
   @override

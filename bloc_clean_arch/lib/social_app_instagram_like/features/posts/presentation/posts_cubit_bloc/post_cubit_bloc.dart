@@ -108,6 +108,7 @@ class PostCubitsBloc extends Cubit<PostsState> {
       );
       await fetchAllPosts();
     } catch (e) {
+      print("Failed to delete comment: $e");
       emit(PostsError("Failed to delete comment: $e "));
     }
   }
